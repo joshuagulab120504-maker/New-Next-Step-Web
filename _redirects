@@ -1,0 +1,10 @@
+# Old Google Sites addresses -> new pages (used by Netlify)
+/home                    /                 301
+/sign-up                 /mentors.html     301
+/view-our-mentors        /mentors.html     301
+/view-our-mentors/*      /mentors.html     301
+/questions               /faq.html         301
+/about-us                /about.html       301
+/feedback                /                 301
+/stories                 /                 301
+/resources               /resources.html   301

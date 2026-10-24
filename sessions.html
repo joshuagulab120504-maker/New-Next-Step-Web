@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Q&amp;A Sessions | Next Step Guyana</title>
+<meta name="description" content="Free live Q&A sessions with Next Step Guyana mentors on CSEC, CAPE, scholarships, studying abroad and careers.">
+<link rel="icon" href="assets/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="site-header"></div>
+
+<main id="main">
+  <section class="page-head">
+    <div class="wrap">
+      <h1>Q&amp;A sessions</h1>
+      <p>Free live sessions on one theme at a time. A panel of mentors shares what worked for them and answers your questions. Anyone can join.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <h2 style="margin-bottom:22px">Upcoming</h2>
+      <div id="upcoming"></div>
+      <div class="past" id="past"></div>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+
+<script src="data/sessions.js"></script>
+<script src="js/site.js"></script>
+<script>
+(function () {
+  var s = NS.sessions();
+  var up = document.getElementById("upcoming");
+  up.innerHTML = s.upcoming.length
+    ? s.upcoming.map(function (x) { return NS.sessionHTML(x, false); }).join("")
+    : '<div class="empty-state"><div><h3>No sessions scheduled right now</h3>' +
+      "<p>We announce new sessions on our WhatsApp channel and Instagram first, with the topic, date and joining link.</p></div>" +
+      '<a class="btn btn-navy" href="' + SITE.whatsapp + '" target="_blank" rel="noopener">Join the WhatsApp channel</a></div>';
+  if (s.past.length) {
+    document.getElementById("past").innerHTML = "<h2>Past sessions</h2>" +
+      s.past.map(function (x) { return NS.sessionHTML(x, true); }).join("");
+  }
+})();
+</script>
+</body>
+</html>

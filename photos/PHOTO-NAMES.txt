@@ -1,0 +1,31 @@
+Put each mentor's photo in this folder with exactly these file names:
+
+joshua-gulab.jpg                 Joshua Gulab
+aniyah-couchman.jpg              Aniyah Couchman
+arav-arjoon.jpg                  Arav Arjoon
+alisande-jaiserrisingh.jpg       Alisande Jaiserrisingh
+dave-chowtie.jpg                 Dave Chowtie
+arthur-roberts.jpg               Arthur Roberts
+athea-allicock.jpg               Athea Allicock
+reginald-brown.jpg               Reginald Brown
+uotam-heeralall.jpg              Uotam Heeralall
+anya-loaknauth.jpg               Anya Loaknauth
+riley-nurse.jpg                  Riley Nurse
+kayla-barrow.jpg                 Kayla Barrow
+sean-pemberton.jpg               Sean Pemberton
+trisha-heeralall.jpg             Trisha Heeralall
+delecia-charles.jpg              Delecia Charles
+jeremey-singh.jpg                Jeremey Singh, MD
+aaliyah-ashby.jpg                Aaliyah Ashby
+vinaya-chatterdeo.jpg            Vinaya Chatterdeo
+shelby-williams.jpg              Shelby Williams
+korphiena-stephen.jpg            Korphiena Stephen
+rebekah-seepersaud.jpg           Rebekah Seepersaud
+rea-harris.jpg                   Rea Harris
+aaron-st-hill.jpg                Aaron St. Hill
+akeriah-hinds.jpg                Akeriah Hinds
+breanne-boucher.jpg              Breanne Boucher
+theresa-nacimento.jpg            Theresa Nacimento
+akeelah-andrew.jpg               Akeelah Andrew
+
+Square-ish JPG, at least 400px wide. Missing photos show the mentor's initials.

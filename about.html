@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About | Next Step Guyana</title>
+<meta name="description" content="Why Next Step Guyana exists: a student-led network of mentors helping Guyanese students take their next step with confidence.">
+<link rel="icon" href="assets/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="site-header"></div>
+
+<main id="main">
+  <section class="page-head">
+    <div class="wrap">
+      <h1>No student should figure out their future alone</h1>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap about-story">
+      <div class="prose">
+        <p>Preparing for CSEC and CAPE is hard enough. Knowing what to do after is harder. What should I study? Where can I apply? How do I pay for it? How do I even begin? Too many Guyanese students face those questions with very little guidance.</p>
+        <p>Next Step Guyana was started by Joshua Gulab and Aniyah Couchman, who remember that feeling well: the pressure, the uncertainty, and the quiet hope that someone would make things clearer.</p>
+        <p>Today we're building Guyana's first network of mentors who've walked the road before you: top performers, scholarship winners, university students and young professionals at home and abroad. Everything we offer is free, from live Q&amp;A sessions to honest advice and resources.</p>
+      </div>
+      <figure class="about-photo">
+        <img src="assets/about-team.jpg" alt="Two members of the Next Step Guyana team holding a laptop showing the first version of the website" loading="lazy">
+      </figure>
+    </div>
+  </section>
+
+  <section class="section-tight section-paper">
+    <div class="wrap">
+      <h2 style="margin-bottom:24px">Founders</h2>
+      <div class="founders" id="founders"></div>
+    </div>
+  </section>
+
+  <section class="section section-night">
+    <div class="wrap">
+      <h2 style="margin-bottom:34px">Choose. Dream. Act.</h2>
+      <div class="values">
+        <div><h3>Choose</h3><p>Understand your options, from CSEC subjects to universities and careers, before you have to decide.</p></div>
+        <div><h3>Dream</h3><p>See what's possible through people from schools like yours who've already done it.</p></div>
+        <div><h3>Act</h3><p>Get practical, honest steps for applications, scholarships and exams, then take them.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap prose">
+      <h2 style="margin-bottom:16px">Work with us</h2>
+      <p>Next Step Guyana is an independent, student-led initiative. If you're a school, youth organisation or education group and want to collaborate, we'd love to hear from you.</p>
+      <p style="margin-top:22px"><a class="btn btn-navy" id="partner" href="#">Email the team</a></p>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+
+<script src="data/mentors.js"></script>
+<script src="js/site.js"></script>
+<script>
+(function () {
+  var f = MENTORS.filter(function (m) { return m.badge; });
+  var roles = { "Founder": "Founder and Executive Director", "Co-founder": "Co-founder and Mentorship Director" };
+  var box = document.getElementById("founders");
+  box.innerHTML = f.map(function (m, i) {
+    return '<button class="founder mcard" type="button" data-i="' + i + '" style="flex-direction:row"><div class="mphoto">' + NS.photo(m, "") + '</div><div style="text-align:left"><b>' + NS.esc(m.name) + "</b><span>" +
+      NS.esc(roles[m.badge] || m.badge) + "<br>" + NS.esc(m.school) + "</span></div></button>";
+  }).join("");
+  NS.bindCards(box, f);
+  document.getElementById("partner").href = "mailto:" + SITE.email + "?subject=" + encodeURIComponent("Partnering with Next Step Guyana");
+})();
+</script>
+</body>
+</html>
