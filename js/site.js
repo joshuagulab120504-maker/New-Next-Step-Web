@@ -21,6 +21,7 @@ window.SITE = {
   ];
   var here = (location.pathname.split("/").pop() || "index.html").toLowerCase();
   if (here === "") here = "index.html";
+  if (here.indexOf(".") < 0) here += ".html"; /* hosts that hide .html, e.g. /about */
 
   var mark = '<img class="brand-mark" src="assets/logo-mark.png" alt="" width="40" height="40">';
 
