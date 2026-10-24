@@ -1,23 +1,37 @@
 /* =====================================================================
-   Q&A SESSIONS: edit this file to announce sessions.
+   Q&A EVENTS: edit this file to announce events.
 
    Copy the example block below, remove the "//" at the start of each
-   line, and fill it in. Sessions sort themselves: anything with a date
+   line, and fill it in. Events sort themselves: anything with a date
    in the future shows as Upcoming; past ones move to Past sessions
    automatically.
 
-   title     What the session is about
+   title     What the event is about
    theme     Short topic tag (e.g. "Study Abroad", "CAPE", "Law")
    date      "YYYY-MM-DD"  (e.g. "2026-11-14")
    time      As you want it shown, e.g. "6:30 PM (GY)"
    where     e.g. "Google Meet", "Instagram Live", "Zoom"
    mentors   Names of mentors on the panel (match the Mentors list)
-   about     One or two sentences describing the session
-   joinLink  Link students click to join (leave "" until you have it)
+   about     One or two sentences describing the event
+   joinLink  Link students click to join or register (leave "" until you have it)
+   button    Optional button text, e.g. "Register" (default "Join event")
    recording Link to the recording afterwards, e.g. a YouTube link
    ===================================================================== */
 
 window.SESSIONS = [
+
+  {
+    title: "EducationUSA Guyana College Fair",
+    theme: "University fair",
+    date: "2026-10-30",
+    time: "9:30 AM to 6:00 PM",
+    where: "Atlantic Suites Hotel (Pegasus Exhibition Center), Seawall Road, Kingston, Georgetown",
+    mentors: [],
+    about: "Hosted by EducationUSA at the U.S. Embassy in Guyana. Meet representatives from U.S. colleges, explore programmes from short courses to full degrees, and get your questions answered in person. Register in advance on Eventbrite.",
+    joinLink: "https://www.eventbrite.com/e/educationusa-guyana-college-fair-tickets-2001893890516",
+    button: "Register",
+    recording: ""
+  },
 
   // {
   //   title: "Studying abroad: applications, essays and scholarships",

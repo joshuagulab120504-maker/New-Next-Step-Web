@@ -5,7 +5,9 @@ window.SITE = {
   email: "nextstepgy@gmail.com",
   whatsapp: "https://whatsapp.com/channel/0029VbB2XqT7oQhUHQwGHe11",
   instagram: "https://www.instagram.com/nextstep.gy",
-  tiktok: "https://www.tiktok.com/@nextstep.gy"
+  tiktok: "https://www.tiktok.com/@nextstep.gy",
+  /* Number shown in the "Community" counter on the home page */
+  community: 693
 };
 
 /* ----- You shouldn't need to edit below this line ----- */
@@ -14,7 +16,7 @@ window.SITE = {
   var PAGES = [
     ["index.html", "Home"],
     ["mentors.html", "Mentors"],
-    ["sessions.html", "Q&A Sessions"],
+    ["events.html", "Q&A Events"],
     ["resources.html", "Resources"],
     ["about.html", "About"],
     ["faq.html", "FAQ"]
@@ -40,7 +42,7 @@ window.SITE = {
   var footer =
     '<footer class="site-footer"><div class="wrap">' +
       '<div class="fcol1"><a class="brand" href="index.html">' + mark + '<span class="brand-name">Next Step <span>Guyana</span></span></a>' +
-      '<p class="tag">Powered by students, for students. Free mentorship, Q&amp;A sessions and resources for students across Guyana.</p></div>' +
+      '<p class="tag">Powered by students, for students. Free mentorship, Q&amp;A events and resources for students across Guyana.</p></div>' +
       "<div><h4>Explore</h4><ul>" + PAGES.slice(1).map(function (p) { return '<li><a href="' + p[0] + '">' + p[1] + "</a></li>"; }).join("") + "</ul></div>" +
       "<div><h4>Contact</h4><ul>" +
         '<li><a href="mailto:' + S.email + '">' + S.email + "</a></li>" +
@@ -106,12 +108,26 @@ window.NS = {
     if (!m.photo) return ini;
     return ini + '<img src="' + NS.esc(m.photo) + '" alt="' + NS.esc(alt || "") + '" loading="lazy" onerror="this.remove()">';
   },
+  /* Short labels for the "Helps with" tags on mentor cards */
+  topicLabel: {
+    "CSEC & CAPE": "CSEC & CAPE",
+    "Study Abroad & Scholarships": "Study abroad",
+    "Business & Economics": "Business",
+    "Engineering & Tech": "Engineering",
+    "Medicine & Science": "Medicine",
+    "Law & Humanities": "Law",
+    "Careers & Skills": "Career guidance",
+    "Youth Programs": "Youth programs"
+  },
   card: function (m, i) {
+    var tags = (m.topics || []).slice(0, 3).map(function (t) {
+      return '<span class="mtag">' + NS.esc(NS.topicLabel[t] || t) + "</span>";
+    }).join("");
     return '<button class="mcard" type="button" data-i="' + i + '" aria-haspopup="dialog">' +
       '<div class="mphoto">' + NS.photo(m, "") + "</div>" +
       '<div class="mbody"><span class="mname">' + NS.esc(m.name) + "</span>" +
-      '<span class="mschool">' + NS.esc(m.school) + "</span>" +
-      '<span class="mhl">' + NS.esc(m.highlights[0] || "") + "</span>" +
+      (tags ? '<span class="mtags">' + tags + "</span>" : "") +
+      '<span class="mnow"><b>Currently:</b> ' + NS.esc(m.school) + "</span>" +
       '<span class="mview">View profile</span></div></button>';
   },
   /* Profile dialog: call once per page, then NS.openProfile(mentor) */
@@ -171,12 +187,13 @@ window.NS = {
     var wk = dt.toLocaleString("en", { weekday: "long" });
     var act = "";
     if (past && s.recording) act = '<a class="btn btn-line" href="' + NS.esc(s.recording) + '" target="_blank" rel="noopener">Watch recording</a>';
-    else if (!past && s.joinLink) act = '<a class="btn btn-gold" href="' + NS.esc(s.joinLink) + '" target="_blank" rel="noopener">Join session</a>';
+    else if (!past && s.joinLink) act = '<a class="btn btn-gold" href="' + NS.esc(s.joinLink) + '" target="_blank" rel="noopener">' + NS.esc(s.button || "Join event") + "</a>";
     else if (!past) act = '<a class="btn btn-line" href="' + window.SITE.whatsapp + '" target="_blank" rel="noopener">Get the link on WhatsApp</a>';
     return '<article class="session"><div class="sdate"><b>' + dt.getDate() + "</b><span>" + mon + " " + dt.getFullYear() + "</span></div>" +
       "<div>" + (s.theme ? '<span class="stheme">' + NS.esc(s.theme) + "</span>" : "") +
       "<h3>" + NS.esc(s.title) + "</h3>" +
-      '<p class="smeta">' + wk + (s.time ? ", " + NS.esc(s.time) : "") + (s.where ? ", on " + NS.esc(s.where) : "") + "</p>" +
+      '<p class="smeta">' + wk + (s.time ? ", " + NS.esc(s.time) : "") + "</p>" +
+      (s.where ? '<p class="swhere">' + NS.esc(s.where) + "</p>" : "") +
       (s.about ? '<p class="sabout">' + NS.esc(s.about) + "</p>" : "") +
       (s.mentors && s.mentors.length ? '<p class="smentors"><b>With</b> ' + s.mentors.map(NS.esc).join(", ") + "</p>" : "") +
       "</div>" + (act ? '<div class="sact">' + act + "</div>" : "") + "</article>";

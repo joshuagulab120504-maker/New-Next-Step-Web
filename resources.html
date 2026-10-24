@@ -83,7 +83,7 @@
             '<div class="vt"><span class="lvl">' + NS.esc(v.level) + "</span><b>" + NS.esc(v.title) + "</b>" +
             (v.description ? "<p>" + NS.esc(v.description) + "</p>" : "") + "</div></div>";
         }).join("") + "</div>"
-      : empty("Videos" + lvl + " are on the way", "We're recording Q&amp;A sessions and short guides with our mentors. They'll appear here as soon as they're ready.");
+      : empty("Videos" + lvl + " are on the way", "We're recording Q&amp;A events and short guides with our mentors. They'll appear here as soon as they're ready.");
 
     document.getElementById("handbooks").innerHTML = books.length
       ? '<div class="books">' + books.map(function (h) {

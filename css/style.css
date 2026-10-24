@@ -140,11 +140,14 @@ p{margin:0}
 .mbody{padding:16px 18px 18px;display:flex;flex-direction:column;gap:4px;flex:1}
 .mname{font-family:var(--display);font-weight:700;font-size:19px;color:var(--night);line-height:1.2}
 .mschool{color:var(--slate);font-size:14.5px;line-height:1.4}
-.mhl{font-size:14.5px;line-height:1.45;margin-top:8px}
+.mtags{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+.mtag{background:var(--gold-soft);color:var(--deep);font-weight:700;font-size:12.5px;line-height:1.2;padding:4px 9px;border-radius:999px}
+.mnow{color:var(--slate);font-size:14px;line-height:1.4;margin-top:8px}
+.mnow b{color:var(--night);font-weight:700}
 .mview{margin-top:auto;padding-top:12px;font-weight:700;font-size:14.5px;color:var(--night)}
 @media (max-width:560px){
   .mentor-grid{grid-template-columns:repeat(2,1fr);gap:12px}
-  .mbody{padding:12px 12px 14px}.mname{font-size:16px}.mschool{font-size:13px}.mhl{display:none}
+  .mbody{padding:12px 12px 14px}.mname{font-size:16px}.mtag{font-size:11.5px;padding:3px 8px}.mnow{font-size:12.5px}
   .initials{font-size:40px}
 }
 
@@ -319,3 +322,30 @@ details.q .a p + p{margin-top:12px}
 .about-photo img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:var(--r-lg)}
 .about-photo figcaption{color:var(--slate);font-size:14.5px;margin-top:10px}
 @media (max-width:860px){.about-story{grid-template-columns:1fr;gap:32px}.about-photo{max-width:520px}}
+
+/* ---------- Home: community counter ---------- */
+.community{display:grid;grid-template-columns:auto 1fr;gap:40px;align-items:center;background:var(--night);color:#fff;border-radius:var(--r-lg);padding:40px 48px;margin-bottom:16px;background-image:radial-gradient(600px 240px at 0% 0%,rgba(242,194,48,.14),transparent 70%)}
+.community-num{display:flex;flex-direction:column;line-height:1}
+.community-num span{font-family:var(--display);font-weight:800;font-size:clamp(72px,9vw,120px);color:var(--gold);letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.community-num small{font-size:20px;font-weight:700;color:#fff;margin-top:6px}
+.community-text h3{font-size:clamp(22px,2.4vw,30px);color:#fff}
+.community-text p{color:#c9d4e2;margin-top:10px;max-width:34em}
+.community-text .link-more{display:inline-block;margin-top:16px}
+.link-light{color:#fff}
+.link-light:hover{color:var(--gold);border-color:var(--gold)}
+@media (max-width:700px){.community{grid-template-columns:1fr;gap:18px;padding:30px 24px;text-align:left}}
+.moments{height:min(42vw,480px)}
+@media (max-width:760px){.moments{height:auto}}
+
+/* ---------- Events ---------- */
+.swhere{color:var(--slate);font-size:15px;margin-top:2px}
+
+/* ---------- About: in the news ---------- */
+.news{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.news-card{display:flex;flex-direction:column;gap:8px;text-decoration:none;color:inherit;background:#fff;border:1px solid var(--line);border-radius:var(--r-md);padding:22px}
+.news-card:hover{border-color:var(--night);color:inherit}
+.news-outlet{font-weight:800;font-size:14px;color:var(--night)}
+.news-card b{font-family:var(--display);font-size:18px;line-height:1.35;color:var(--ink)}
+.news-date{color:var(--slate);font-size:14px}
+.news-read{margin-top:auto;padding-top:8px;font-weight:700;font-size:14.5px;color:var(--night)}
+@media (max-width:900px){.news{grid-template-columns:1fr}}

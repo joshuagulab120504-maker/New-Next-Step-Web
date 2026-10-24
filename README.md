@@ -7,7 +7,9 @@ A plain HTML/CSS/JavaScript site. There's no build step and no database. Open `i
 | To change… | Edit this file |
 |---|---|
 | Mentors (add, remove, update, contact details) | `data/mentors.js` |
-| Q&A sessions (announce, add join links, add recordings) | `data/sessions.js` |
+| Q&A events (announce, add join or register links, add recordings) | `data/sessions.js` |
+| News articles on the About page | `data/news.js` |
+| Community counter on the home page | `community` at the top of `js/site.js` |
 | Videos, handbooks (PDFs go in `/handbooks`) and links | `data/resources.js` |
 | Email, WhatsApp, Instagram, TikTok links | top of `js/site.js` |
 | About / FAQ wording | `about.html`, `faq.html` |
@@ -15,7 +17,7 @@ A plain HTML/CSS/JavaScript site. There's no build step and no database. Open `i
 
 Each data file has instructions at the top. Copy an existing `{ ... }` block, paste it below, and change the details. Watch the commas: every block ends with `},` except it's fine on the last one too.
 
-**Sessions sort themselves.** Anything dated today or later shows as Upcoming, and past sessions move down to "Past sessions" automatically. Add a `recording` link after a session and it gets a "Watch recording" button.
+**Events sort themselves.** Anything dated today or later shows as Upcoming, and past events move down to "Past events" automatically. Add a `recording` link after an event and it gets a "Watch recording" button.
 
 ## Photos
 

@@ -24,11 +24,18 @@
       <div class="prose">
         <p>Preparing for CSEC and CAPE is hard enough. Knowing what to do after is harder. What should I study? Where can I apply? How do I pay for it? How do I even begin? Too many Guyanese students face those questions with very little guidance.</p>
         <p>Next Step Guyana was started by Joshua Gulab and Aniyah Couchman, who remember that feeling well: the pressure, the uncertainty, and the quiet hope that someone would make things clearer.</p>
-        <p>Today we're building Guyana's first network of mentors who've walked the road before you: top performers, scholarship winners, university students and young professionals at home and abroad. Everything we offer is free, from live Q&amp;A sessions to honest advice and resources.</p>
+        <p>Today we're building Guyana's first network of mentors who've walked the road before you: top performers, scholarship winners, university students and young professionals at home and abroad. Everything we offer is free, from Q&amp;A events to honest advice and resources.</p>
       </div>
       <figure class="about-photo">
         <img src="assets/about-team.jpg" alt="Two members of the Next Step Guyana team holding a laptop showing the first version of the website" loading="lazy">
       </figure>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="wrap">
+      <h2 style="margin-bottom:24px">In the news</h2>
+      <div class="news" id="news"></div>
     </div>
   </section>
 
@@ -62,6 +69,7 @@
 <div id="site-footer"></div>
 
 <script src="data/mentors.js"></script>
+<script src="data/news.js"></script>
 <script src="js/site.js"></script>
 <script>
 (function () {
@@ -73,6 +81,14 @@
       NS.esc(roles[m.badge] || m.badge) + "<br>" + NS.esc(m.school) + "</span></div></button>";
   }).join("");
   NS.bindCards(box, f);
+  document.getElementById("news").innerHTML = (window.NEWS || []).map(function (n) {
+    var p = n.date.split("-"), d = new Date(+p[0], +p[1] - 1, +p[2]);
+    return '<a class="news-card" href="' + NS.esc(n.url) + '" target="_blank" rel="noopener">' +
+      '<span class="news-outlet">' + NS.esc(n.outlet) + "</span>" +
+      "<b>" + NS.esc(n.title) + "</b>" +
+      '<span class="news-date">' + d.toLocaleDateString("en", { day: "numeric", month: "long", year: "numeric" }) + "</span>" +
+      '<span class="news-read">Read article</span></a>';
+  }).join("");
   document.getElementById("partner").href = "mailto:" + SITE.email + "?subject=" + encodeURIComponent("Partnering with Next Step Guyana");
 })();
 </script>

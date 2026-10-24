@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Next Step Guyana</title>
-<meta name="description" content="Helping Guyanese students figure out their future. Free mentorship and live Q&A sessions with students and young professionals who've been there.">
+<meta name="description" content="Helping Guyanese students figure out their future. Free mentorship and Q&A events with students and young professionals who've been there.">
 <meta property="og:title" content="Next Step Guyana">
 <meta property="og:description" content="Helping Guyanese students figure out their future.">
 <meta property="og:type" content="website">
@@ -50,7 +50,7 @@
         <div class="step">
           <span class="step-n">3</span>
           <h3>Reach out</h3>
-          <p>Contact them from their profile, or ask a whole panel at a live Q&amp;A.</p>
+          <p>Contact them from their profile, or ask a whole panel at a Q&amp;A event.</p>
         </div>
         <div class="step">
           <span class="step-n">4</span>
@@ -66,6 +66,14 @@
       <div class="moments-head">
         <h2>Students helping students</h2>
         <p>Our mentors are in classrooms and communities across Guyana, sharing what they've learned with the students coming up behind them.</p>
+      </div>
+      <div class="community">
+        <div class="community-num"><span id="community-count">693</span><small>students</small></div>
+        <div class="community-text">
+          <h3>in the Next Step community, and growing</h3>
+          <p>Students from across Guyana use Next Step to find mentors, join Q&amp;A events and get ready for CSEC, CAPE and university.</p>
+          <a class="link-more link-light" href="#whatsapp">Join the community</a>
+        </div>
       </div>
       <div class="moments">
         <figure class="m-big"><img src="assets/moment-classroom.jpg" alt="A Next Step mentor leading a session for a room of primary and secondary school students" loading="lazy"></figure>
@@ -88,8 +96,8 @@
   <section class="section">
     <div class="wrap">
       <div class="section-head">
-        <h2>Upcoming Q&amp;A sessions</h2>
-        <a class="link-more" href="sessions.html">All sessions</a>
+        <h2>Upcoming Q&amp;A events</h2>
+        <a class="link-more" href="events.html">All events</a>
       </div>
       <div id="next-session"></div>
     </div>
@@ -114,6 +122,7 @@
 <script>
 (function () {
   document.getElementById("wa-btn").href = SITE.whatsapp;
+  document.getElementById("community-count").textContent = Number(SITE.community).toLocaleString("en");
 
   // Featured mentors: first 4 in alphabetical order
   var pick = window.MENTORS.slice().sort(function (x, y) { return x.name.localeCompare(y.name); }).slice(0, 4);
@@ -125,7 +134,7 @@
   var up = NS.sessions().upcoming.slice(0, 2);
   document.getElementById("next-session").innerHTML = up.length
     ? up.map(function (s) { return NS.sessionHTML(s, false); }).join("")
-    : '<div class="empty-state"><div><h3>The next session is being planned</h3>' +
+    : '<div class="empty-state"><div><h3>The next event is being planned</h3>' +
       "<p>We announce each topic, date and joining link on our WhatsApp channel first.</p></div>" +
       '<a class="btn btn-line" href="#whatsapp">Get notified</a></div>';
 })();
