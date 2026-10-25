@@ -34,7 +34,6 @@ var ALIAS={'doctor':['Medical Doctor','Specialist Doctor'],'physician':['Medical
  'ac':['Refrigeration'],'hairdresser':['Cosmetologist'],'barber':['Cosmetologist'],'makeup':['Cosmetologist'],'cook':['Chef','Cook / Baker'],'baker':['Cook / Baker'],'tailor':['Garment Maker'],
  'sailor':['Boat Master','Ocean-Going'],'captain':['Boat Master','Ocean-Going','Pilot'],'aviation':['Pilot','Aircraft Maintenance','Air-Traffic','Flight Dispatcher'],'professor':['Lecturer'],
  'athlete':['Track and Field','Cricketer','Footballer'],'pastor':['Religious Vocation'],'priest':['Religious Vocation'],'environment':['Environmental Scientist'],'solar':['Solar','Renewable-Energy'],'engineer':['Engineer']};
-var POPULAR=[['career-medical-doctor','Doctor'],['career-lawyer-attorney-at-law','Lawyer'],['career-software-web-mobile-developer','Software developer'],['career-nurse-midwife','Nurse'],['career-civil-mechanical-and-electrical-engineer','Engineer'],['career-teacher','Teacher'],['career-pilot','Pilot']];
 
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 function cap(h){return h.replace(/^((?:<[^>]+>)*)([a-z])/,function(m,a,b){return a+b.toUpperCase()})}
@@ -75,9 +74,7 @@ q.addEventListener('keydown',function(e){
 sug.addEventListener('mousedown',function(e){var li=e.target.closest('li[data-id]');if(li){e.preventDefault();pick(li.getAttribute('data-id'))}});
 document.addEventListener('click',function(e){if(!combo.contains(e.target))close()});
 
-/* popular + streams */
-var pop=document.getElementById('popular');
-POPULAR.forEach(function(x){if(!byId[x[0]])return;var b=document.createElement('button');b.type='button';b.className='pop';b.textContent=x[1];b.addEventListener('click',function(){go(x[0])});pop.appendChild(b)});
+/* streams */
 var stabs=document.getElementById('stabs');
 S.forEach(function(s){var b=document.createElement('button');b.type='button';b.className='stab';b.setAttribute('data-s',s.id);b.setAttribute('aria-pressed','false');b.textContent=s.name;b.addEventListener('click',function(){go(s.id)});stabs.appendChild(b)});
 

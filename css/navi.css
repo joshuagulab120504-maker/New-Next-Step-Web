@@ -20,10 +20,6 @@ main.navi .wrap{padding-top:40px;padding-bottom:64px}
 .suggest li[aria-selected="true"],.suggest li:hover{background:var(--paper)}
 .suggest mark{background:none;color:inherit;text-decoration:underline;text-decoration-color:var(--gold);text-decoration-thickness:3px;text-underline-offset:3px}
 .suggest .empty{font-weight:400;color:var(--slate);cursor:default}
-.popular{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:16px}
-.popular span{color:#c9d4e2;font-size:15px}
-.pop{font:inherit;font-size:15px;font-weight:700;color:#fff;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.28);padding:7px 14px;border-radius:999px;cursor:pointer}
-.pop:hover{background:rgba(255,255,255,.18)}
 
 /* stream bar */
 .streams{background:var(--paper);border-bottom:1px solid var(--line)}
