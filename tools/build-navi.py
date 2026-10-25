@@ -1,8 +1,10 @@
 """Rebuild data/navi.js from the Career Pathways Guide (markdown).
-Usage: python3 tools/build-navi.py path/to/CareersV3.md
+Usage: python3 tools/build-navi.py
+(reads data/careers-guide.md; pass another path to use a different copy)
 """
-import re, json, sys, html
-src=open(sys.argv[1],encoding='utf-8').read().split('\n')
+import re, json, sys, html, os
+_guide=sys.argv[1] if len(sys.argv)>1 else os.path.join(os.path.dirname(os.path.abspath(__file__)),'..','data','careers-guide.md')
+src=open(_guide,encoding='utf-8').read().split('\n')
 
 def inline(t):
     t=html.escape(t.strip(), quote=False)
@@ -121,8 +123,8 @@ with open(os.path.join(here,'..','data','navi.js'),'w',encoding='utf-8') as f:
     f.write("""/* =====================================================================
    NAVI DATA: generated from the Next Step Guyana Career Pathways Guide.
    Don't edit this file by hand. To update careers, edit the guide
-   (CareersV3.md) and rebuild this file with tools/build-navi.py:
-     python3 tools/build-navi.py path/to/CareersV3.md
+   (data/careers-guide.md) and rebuild this file:
+     python3 tools/build-navi.py
    ===================================================================== */
 window.NAVI = """+json.dumps(d,ensure_ascii=False,separators=(',',':'))+';\n')
 print(len(d['profiles']),'careers written to data/navi.js')

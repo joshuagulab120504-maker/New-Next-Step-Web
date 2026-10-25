@@ -11,7 +11,7 @@ A plain HTML/CSS/JavaScript site. There's no build step and no database. Open `i
 | News articles on the About page | `data/news.js` |
 | Community counter on the home page | `community` at the top of `js/site.js` |
 | Videos, handbooks (PDFs go in `/handbooks`) and links | `data/resources.js` |
-| Navi careers | the Career Pathways Guide, then rebuild (see below) |
+| Navi careers | `data/careers-guide.md`, then rebuild (see below) |
 | Navi stream subject lists | `STREAM_SUBJECTS` near the top of `js/navi.js` |
 | Email, WhatsApp, Instagram, TikTok links | top of `js/site.js` |
 | About / FAQ wording | `about.html`, `faq.html` |
@@ -23,13 +23,16 @@ Each data file has instructions at the top. Copy an existing `{ ... }` block, pa
 
 ## Navi (career navigator)
 
-`navi.html` lets students search a career or pick a CSEC stream and see the subjects and steps to get there. Its careers come from the Career Pathways Guide (`CareersV3.md`). After you update the guide, rebuild Navi's data:
+`navi.html` lets students search a career or pick a CSEC stream and see the subjects and steps to get there. Its careers come from the Career Pathways Guide, kept in this repo at `data/careers-guide.md`. To fix or add a career:
+
+1. Edit `data/careers-guide.md` (and update its **Last verified** date if you rechecked sources).
+2. Rebuild Navi's data:
 
 ```
-python3 tools/build-navi.py path/to/CareersV3.md
+python3 tools/build-navi.py
 ```
 
-This rewrites `data/navi.js`. Commit it and the site updates. Which careers fit each stream is worked out from the CSEC subjects the guide recommends for each career.
+This rewrites `data/navi.js`. Commit both files and the site updates. Don't edit `data/navi.js` by hand; the next rebuild would overwrite it. Which careers fit each stream is worked out from the CSEC subjects the guide recommends for each career.
 
 ## Photos
 
