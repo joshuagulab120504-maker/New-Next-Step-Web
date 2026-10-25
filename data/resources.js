@@ -85,12 +85,6 @@ window.LINKS = [
     description: "Programmes, admissions and deadlines at UG."
   },
   {
-    title: "QuestBridge",
-    url: "https://www.questbridge.org",
-    category: "Scholarships",
-    description: "Full scholarships to top US colleges for high-achieving students from low-income families."
-  },
-  {
     title: "Chevening Scholarships",
     url: "https://www.chevening.org",
     category: "Scholarships",

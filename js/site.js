@@ -16,6 +16,7 @@ window.SITE = {
   var PAGES = [
     ["index.html", "Home"],
     ["mentors.html", "Mentors"],
+    ["navi.html", "Navi"],
     ["events.html", "Q&A Events"],
     ["resources.html", "Resources"],
     ["about.html", "About"],

@@ -11,6 +11,8 @@ A plain HTML/CSS/JavaScript site. There's no build step and no database. Open `i
 | News articles on the About page | `data/news.js` |
 | Community counter on the home page | `community` at the top of `js/site.js` |
 | Videos, handbooks (PDFs go in `/handbooks`) and links | `data/resources.js` |
+| Navi careers | the Career Pathways Guide, then rebuild (see below) |
+| Navi stream subject lists | `STREAM_SUBJECTS` near the top of `js/navi.js` |
 | Email, WhatsApp, Instagram, TikTok links | top of `js/site.js` |
 | About / FAQ wording | `about.html`, `faq.html` |
 | Colours and fonts | top of `css/style.css` |
@@ -18,6 +20,16 @@ A plain HTML/CSS/JavaScript site. There's no build step and no database. Open `i
 Each data file has instructions at the top. Copy an existing `{ ... }` block, paste it below, and change the details. Watch the commas: every block ends with `},` except it's fine on the last one too.
 
 **Events sort themselves.** Anything dated today or later shows as Upcoming, and past events move down to "Past events" automatically. Add a `recording` link after an event and it gets a "Watch recording" button.
+
+## Navi (career navigator)
+
+`navi.html` lets students search a career or pick a CSEC stream and see the subjects and steps to get there. Its careers come from the Career Pathways Guide (`CareersV3.md`). After you update the guide, rebuild Navi's data:
+
+```
+python3 tools/build-navi.py path/to/CareersV3.md
+```
+
+This rewrites `data/navi.js`. Commit it and the site updates. Which careers fit each stream is worked out from the CSEC subjects the guide recommends for each career.
 
 ## Photos
 

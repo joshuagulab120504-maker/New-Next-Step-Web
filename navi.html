@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Navi | Next Step Guyana</title>
+<meta name="description" content="Navi, the Next Step Guyana career navigator. Type a career or pick your CSEC stream to see the subjects and steps that get you there in Guyana.">
+<meta property="og:title" content="Navi | Next Step Guyana">
+<meta property="og:description" content="Type a career to see the subjects and steps that get you there in Guyana.">
+<meta property="og:image" content="https://www.nextstepgy.org/assets/hero.jpg">
+<link rel="icon" href="assets/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/navi.css">
+</head>
+<body>
+<div id="site-header"></div>
+
+<main id="main" class="navi">
+  <section class="page-head" id="navi-head">
+    <div class="wrap">
+      <p class="eyebrow">Career navigator</p>
+      <h1>Navi</h1>
+      <p class="lede">Type a career to see the subjects and steps that get you there in Guyana.</p>
+      <div class="nv-search" id="combo">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="q" type="text" role="combobox" aria-expanded="false" aria-controls="suggest" aria-autocomplete="list" autocomplete="off" spellcheck="false" placeholder="Doctor, lawyer, pilot, electrician…" aria-label="Search for a career">
+        <ul class="suggest" id="suggest" role="listbox" hidden></ul>
+      </div>
+      <div class="popular" id="popular"><span>Popular:</span></div>
+      <p class="verify-line">We are always verifying these pathways. Spot something wrong? <a href="https://forms.gle/9TUT36DHD6t8ngKa7" target="_blank" rel="noopener">Tell us and we will correct it</a>.</p>
+    </div>
+  </section>
+
+  <section class="streams" aria-label="Browse by CSEC stream">
+    <div class="wrap"><p>Browse by stream</p><div class="stabs" id="stabs"></div></div>
+  </section>
+
+  <div class="wrap"><div class="col" id="view" aria-live="polite"></div></div>
+</main>
+
+<div id="site-footer"></div>
+
+<script src="data/navi.js"></script>
+<script src="js/site.js"></script>
+<script src="js/navi.js"></script>
+</body>
+</html>
