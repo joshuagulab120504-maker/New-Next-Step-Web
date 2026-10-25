@@ -18,6 +18,8 @@
    linkedin   Optional full link
    If email is blank, "Contact" emails Next Step Guyana instead and
    your team connects the student.
+   NOTE: right now every "Contact" button opens the team WhatsApp link set
+   as mentorContact at the top of js/site.js. Clear that to use email again.
    ===================================================================== */
 
 window.MENTORS = [

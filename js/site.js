@@ -6,6 +6,9 @@ window.SITE = {
   whatsapp: "https://whatsapp.com/channel/0029VbB2XqT7oQhUHQwGHe11",
   instagram: "https://www.instagram.com/nextstep.gy",
   tiktok: "https://www.tiktok.com/@nextstep.gy",
+  /* Every mentor's "Contact" button goes here. Leave it "" to go back to
+     emailing (each mentor's own email, or the team email if they have none). */
+  mentorContact: "https://wa.me/message/C2S5KQM6RXLVD1",
   /* Number shown in the "Community" counter on the home page */
   community: 693
 };
@@ -159,8 +162,10 @@ window.NS = {
       '<p class="pmeta">' + NS.esc(m.school) + (m.field ? "<br>" + NS.esc(m.field) : "") + "</p>" +
       '<div class="ptopics">' + (m.topics || []).map(function (t) { return "<span>" + NS.esc(t) + "</span>"; }).join("") + "</div>" +
       "<ul>" + m.highlights.map(function (h) { return "<li>" + NS.esc(h) + "</li>"; }).join("") + "</ul>" +
-      '<div class="pcontact"><a class="btn btn-gold" href="' + mail + '">Contact ' + NS.esc(first) + "</a>" + links + "</div>" +
-      (m.email ? "" : '<p class="pnote">Your email goes to the Next Step Guyana team, who will introduce you to ' + NS.esc(first) + ".</p>") +
+      '<div class="pcontact"><a class="btn btn-gold" href="' + (S.mentorContact || mail) + '"' + (S.mentorContact ? ' target="_blank" rel="noopener"' : "") + '>Contact ' + NS.esc(first) + "</a>" + links + "</div>" +
+      (S.mentorContact
+        ? '<p class="pnote">Your message goes to the Next Step Guyana team on WhatsApp, who will introduce you to ' + NS.esc(first) + ".</p>"
+        : (m.email ? "" : '<p class="pnote">Your email goes to the Next Step Guyana team, who will introduce you to ' + NS.esc(first) + ".</p>")) +
       "</div></div>";
     d.querySelector(".pclose").addEventListener("click", function () { d.close(); });
     d.showModal();
