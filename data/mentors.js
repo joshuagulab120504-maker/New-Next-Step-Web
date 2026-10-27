@@ -155,7 +155,7 @@ window.MENTORS = [
   },
   {
     name: "Anya Loaknauth",
-    school: "St. Thomas of Villanova, Canada",
+    school: "Western University, Canada",
     field: "",
     topics: ["CSEC & CAPE", "Study Abroad & Scholarships"],
     highlights: [
