@@ -57,6 +57,13 @@
     var m = String(v || "").match(/(?:youtu\.be\/|[?&]v=|\/(?:embed|shorts|live)\/)([\w-]{11})/);
     return m ? m[1] : String(v || "").trim();
   };
+  var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  /* "2026-10-29" -> "29 Oct 2026" */
+  var niceDate = function (d) {
+    var m = String(d || "").match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);
+    return m && MONTHS[+m[2] - 1] ? +m[3] + " " + MONTHS[+m[2] - 1] + " " + m[1] : "";
+  };
+  var cleanTitle = function (t) { return String(t || "").replace(/^\s*next\s*step\s*guyana\s*[-–—|:]\s*/i, ""); };
   var mentorOf = function (name) {
     var n = String(name || "").trim().toLowerCase();
     return n ? M.filter(function (m) { return m.name.toLowerCase() === n; })[0] : null;
@@ -75,11 +82,12 @@
   }
 
   function videoCard(v, i) {
-    var m = mentorOf(v.mentor), first = m ? m.name.split(" ")[0] : "";
-    return '<article class="video' + (i === 0 ? " lead" : "") + '">' +
+    var m = mentorOf(v.mentor), first = m ? m.name.split(" ")[0] : "", title = cleanTitle(v.title), when = niceDate(v.date);
+    return '<article class="video">' +
       '<div class="frame"><iframe src="https://www.youtube-nocookie.com/embed/' + encodeURIComponent(ytId(v.youtube)) + '?rel=0"' +
-      ' title="' + NS.esc(v.title) + '" loading="lazy" allow="accelerometer; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>' +
-      '<div class="vt"><h3>' + NS.esc(v.title) + "</h3>" +
+      ' title="' + NS.esc(title) + '" loading="lazy" allow="accelerometer; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>' +
+      '<div class="vt"><h3>' + NS.esc(title) + "</h3>" +
+      (when ? '<time class="vdate" datetime="' + NS.esc(v.date) + '">Posted ' + when + "</time>" : "") +
       (v.description ? "<p>" + NS.esc(v.description) + "</p>" : "") +
       (m ? '<button class="vmentor" type="button" data-mentor="' + NS.esc(m.name) + '" aria-haspopup="dialog">' +
            '<span class="vava">' + NS.photo(m, "") + "</span><span>See " + NS.esc(first) + "'s mentor profile</span></button>" : "") +

@@ -2,7 +2,9 @@
    RESOURCES: edit this file to add videos, handbooks and links.
 
    VIDEOS (YouTube): paste the YouTube link (or just its ID), the date
-   it was posted, and the title. The page shows the 5 newest first, with
+   it was posted (shown on the page), and the title. No need to start the
+   title with "Next Step Guyana -"; the page drops it if you do.
+   The page shows the 5 newest first, with
    a "See all videos" button for the rest. Newest is worked out from the
    date, so the order here doesn't matter.
    Add mentor: "Full Name" (spelled exactly as in data/mentors.js) to
@@ -19,7 +21,7 @@
 window.VIDEOS = [
 
   {
-    title: "Study Abroad in the US",
+    title: "Study Abroad in the United States by Korphiena Stephen",
     youtube: "https://youtu.be/aLyC8GTBAYc",
     date: "2026-10-29",
     mentor: "Korphiena Stephen"
