@@ -78,6 +78,9 @@ p{margin:0}
 
 /* ---------- Hero (home): the cover artwork, softly faded behind the text ---------- */
 .hero{position:relative;color:#fff;background:#13305a url("../assets/hero.jpg") 62% 40%/cover no-repeat;overflow:hidden}
+/* Lighter WebP pictures where supported (older browsers keep the JPG above); phones get a smaller one */
+.hero{background-image:image-set(url("../assets/hero.webp") type("image/webp"),url("../assets/hero.jpg") type("image/jpeg"))}
+@media (max-width:800px){.hero{background-image:image-set(url("../assets/hero-sm.webp") type("image/webp"),url("../assets/hero.jpg") type("image/jpeg"))}}
 .hero::before{content:"";position:absolute;inset:0;background:
   linear-gradient(90deg,rgba(7,21,41,.72) 0%,rgba(7,21,41,.45) 38%,rgba(7,21,41,.12) 65%,rgba(7,21,41,.12) 100%),
   linear-gradient(0deg,rgba(7,21,41,.5) 0%,rgba(7,21,41,0) 35%)}
@@ -185,6 +188,8 @@ dialog.profile::backdrop{background:rgba(7,21,41,.62)}
 
 /* ---------- Page heading (inner pages) ---------- */
 .page-head{color:#fff;position:relative;overflow:hidden;background:#13305a url("../assets/sky.jpg") center 30%/cover no-repeat}
+.page-head{background-image:image-set(url("../assets/sky.webp") type("image/webp"),url("../assets/sky.jpg") type("image/jpeg"))}
+@media (max-width:800px){.page-head{background-image:image-set(url("../assets/sky-sm.webp") type("image/webp"),url("../assets/sky.jpg") type("image/jpeg"))}}
 .page-head::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(7,21,41,.82) 0%,rgba(7,21,41,.55) 60%,rgba(7,21,41,.25) 100%)}
 .page-head .wrap{padding-top:72px;padding-bottom:64px;position:relative}
 .page-head h1{font-size:clamp(40px,6vw,64px);font-weight:800;letter-spacing:-.03em;color:#fff;text-wrap:balance}
@@ -294,6 +299,7 @@ details.q .a p + p{margin-top:12px}
 .moments-head p{color:var(--slate);font-size:18px;margin-top:12px}
 .moments{display:grid;grid-template-columns:1.6fr 1fr;grid-template-rows:1fr 1fr;gap:14px;height:min(56vw,620px)}
 .moments figure{margin:0;border-radius:var(--r-lg);overflow:hidden;background:var(--paper)}
+.moments picture{display:block;width:100%;height:100%}
 .moments img{width:100%;height:100%;object-fit:cover}
 .m-big{grid-row:1 / 3}
 .m-a img{object-position:center 30%}

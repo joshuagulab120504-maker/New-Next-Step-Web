@@ -16,7 +16,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="assets/favicon.png" type="image/png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
-<link rel="preload" as="image" href="brochure/panel-1.webp">
+<link rel="preload" as="image" href="brochure/panel-1-sm.webp">
 <style>
   :root{--deep:#071529;--night:#0c2340;--gold:#f2c230;--font:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;--bar:64px}
   *{box-sizing:border-box}
@@ -143,15 +143,26 @@
   var page = 0, mode = "";
 
   /* ---------- Book mode: leaf i has page 2i on the front and 2i+1 on the back ---------- */
+  /* (Built only the first time the book view is needed, so phones never download it.) */
   var leaves = [];
-  for (var i = 0; i < LEAVES; i++) {
-    var f = 2 * i, b = 2 * i + 1;
-    var leaf = document.createElement("div");
-    leaf.className = "leaf";
-    leaf.innerHTML =
-      '<div class="face front"><img src="' + big(f) + '" alt="' + esc(P[f].alt) + '" draggable="false"' + (f > 1 ? ' loading="lazy"' : "") + '></div>' +
-      '<div class="face back">' + (b < N ? '<img src="' + big(b) + '" alt="' + esc(P[b].alt) + '" draggable="false" loading="lazy">' : "") + "</div>";
-    book.appendChild(leaf); leaves.push(leaf);
+  function buildBook() {
+    if (leaves.length) return;
+    for (var i = 0; i < LEAVES; i++) {
+      var f = 2 * i, b = 2 * i + 1;
+      var leaf = document.createElement("div");
+      leaf.className = "leaf";
+      leaf.innerHTML =
+        '<div class="face front"><img data-src="' + big(f) + '" alt="' + esc(P[f].alt) + '" draggable="false"></div>' +
+        '<div class="face back">' + (b < N ? '<img data-src="' + big(b) + '" alt="' + esc(P[b].alt) + '" draggable="false">' : "") + "</div>";
+      book.appendChild(leaf); leaves.push(leaf);
+    }
+    /* Pages showing now load first; the rest follow so page turns never show a blank page */
+    var imgs = [].slice.call(book.querySelectorAll("img[data-src]"));
+    var load = function (img) { if (img.dataset.src) { img.src = img.dataset.src; img.removeAttribute("data-src"); } };
+    var s0 = spreadOf(page), firstIdx = s0 === 0 ? [0] : [2 * s0 - 1, 2 * s0];
+    firstIdx.forEach(function (k) { if (imgs[k]) load(imgs[k]); });
+    var rest = function () { imgs.forEach(load); };
+    if (imgs[firstIdx[0]]) { imgs[firstIdx[0]].addEventListener("load", rest); imgs[firstIdx[0]].addEventListener("error", rest); } else rest();
   }
   /* Spread s (0..LEAVES) = number of leaves turned. Spread 0 = cover alone, last = back page alone. */
   var spreadOf = function (p) { return Math.ceil(p / 2); };
@@ -184,17 +195,48 @@
   });
 
   /* ---------- Swipe mode: one page per screen, native swipe + scroll + pinch ---------- */
+  /* Each page first loads a light version (~60-110 KB) so it appears fast on slow data,
+     then the page being read swaps to the sharp version. With Data Saver or a 2G/3G
+     connection, the sharp version only loads if the student pinches to zoom. */
+  var conn = navigator.connection || {};
+  var slow = !!(conn.saveData || /2g|3g/.test(conn.effectiveType || ""));
   track.innerHTML = P.map(function (p, i) {
     return '<section class="slide" aria-label="Page ' + (i + 1) + " of " + N + ": " + esc(p.name) + '">' +
-      '<img src="' + small(i) + '" srcset="' + small(i) + " 560w, " + big(i) + ' 1100w" sizes="min(100vw - 24px, 640px)"' +
-      ' width="1100" height="2550" alt="' + esc(p.alt) + '"' + (i > 1 ? ' loading="lazy"' : "") + ' decoding="async"></section>';
+      '<img ' + (i === 0 ? 'src="' + small(i) + '" fetchpriority="high"' : 'data-src="' + small(i) + '"') + ' width="1100" height="2550" alt="' + esc(p.alt) + '" decoding="async"></section>';
   }).join("");
-  var slides = track.children, scrollTimer;
+  var slides = track.children, scrollTimer, queued = false;
+  /* Load order on slow data: the page on screen first, then the next one, then the rest */
+  function loadSlide(i) {
+    var img = slides[i] && slides[i].querySelector("img[data-src]");
+    if (img) { img.src = img.dataset.src; img.removeAttribute("data-src"); }
+    return slides[i] && slides[i].querySelector("img");
+  }
+  function whenLoaded(img, fn) { if (!img || img.complete) fn(); else { img.addEventListener("load", fn, { once: true }); img.addEventListener("error", fn, { once: true }); } }
+  function queueSlides() {
+    if (queued) return; queued = true;
+    whenLoaded(loadSlide(page), function () {
+      whenLoaded(loadSlide(Math.min(N - 1, page + 1)), function () {
+        for (var k = 0; k < N; k++) loadSlide(k);
+        sharpen(page);
+      });
+    });
+  }
+  function sharpen(i, force) {
+    var img = slides[i] && slides[i].querySelector("img");
+    if (!img || img.dataset.sharp || (slow && !force) || mode !== "swipe" || (!queued && !force)) return;
+    if (window.innerWidth * (window.devicePixelRatio || 1) <= 600 && !force) return; /* small screens: light version is already sharp */
+    img.dataset.sharp = "1";
+    var go = function () { var hi = new Image(); hi.onload = function () { img.src = hi.src; }; hi.src = big(i); };
+    if (img.complete) go(); else img.addEventListener("load", go, { once: true });
+  }
+  if (window.visualViewport) window.visualViewport.addEventListener("resize", function () {
+    if (window.visualViewport.scale > 1.2) sharpen(page, true);
+  });
   track.addEventListener("scroll", function () {
     clearTimeout(scrollTimer);
     scrollTimer = setTimeout(function () {
       var p = Math.round(track.scrollLeft / track.clientWidth);
-      if (p !== page && p >= 0 && p < N) { page = p; label(); }
+      if (p !== page && p >= 0 && p < N) { page = p; label(); loadSlide(page); sharpen(page); }
     }, 60);
   }, { passive: true });
   function drawSwipe(smooth) {
@@ -222,7 +264,7 @@
       var s = Math.max(0, Math.min(LEAVES, spreadOf(page) + dir));
       page = s === 0 ? 0 : 2 * s - 1; drawBook();
     } else {
-      page = Math.max(0, Math.min(N - 1, page + dir)); drawSwipe(true);
+      page = Math.max(0, Math.min(N - 1, page + dir)); loadSlide(page); drawSwipe(true); sharpen(page);
     }
     label();
   }
@@ -267,8 +309,8 @@
       body.classList.toggle("swipe-mode", m === "swipe");
       if (m !== "book" && zoomed) { zoomed = false; body.classList.remove("zoomed"); }
     }
-    if (mode === "book") { if (page > 0 && page % 2 === 0) page -= 1; sizeBook(); drawBook(); }
-    else drawSwipe(false);
+    if (mode === "book") { buildBook(); sizeBook(); drawBook(); }
+    else { drawSwipe(false); queueSlides(); }
     label();
   }
   var rt;
