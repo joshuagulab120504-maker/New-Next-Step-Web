@@ -16,7 +16,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="assets/favicon.png" type="image/png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
-<link rel="preload" as="image" href="brochure/panel-1-sm.webp">
+<link rel="preload" as="image" href="brochure/panel-1-sm.webp" media="(max-width:819px)">
 <style>
   :root{--deep:#071529;--night:#0c2340;--gold:#f2c230;--font:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;--bar:64px}
   *{box-sizing:border-box}
@@ -44,26 +44,33 @@
   .dots i{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.3);transition:background .2s,transform .2s}
   .dots i.on{background:var(--gold);transform:scale(1.25)}
 
-  /* ===== Book mode (computers, landscape tablets) ===== */
-  .stage{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:68px 20px calc(var(--bar) + 10px);perspective:2400px}
+  /* ===== Tri-fold mode (computers, landscape tablets) ===== */
+  .stage{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:68px 20px calc(var(--bar) + 10px);perspective:2600px}
   .book-mode .stage{display:flex}
-  .book{position:relative;flex:none;transition:transform .6s cubic-bezier(.3,.1,.2,1)}
   .zoomed .stage{align-items:flex-start;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}
-  .zoomed .book{margin-bottom:20px}
+  .zoomed .tri{margin-bottom:20px}
   .top .right{display:flex;gap:10px}
   #zoom{display:none}
   .book-mode #zoom{display:inline-flex}
   #zoom[aria-pressed="true"]{background:var(--gold);color:var(--deep);border-color:var(--gold)}
-  .leaf{position:absolute;top:0;left:50%;width:50%;height:100%;transform-origin:left center;transform-style:preserve-3d;transition:transform .8s cubic-bezier(.35,.05,.2,1);cursor:pointer}
-  .leaf.flipped{transform:rotateY(-180deg)}
-  .face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden;background:#fff}
-  .face img{width:100%;height:100%;display:block;object-fit:cover;user-select:none;-webkit-user-drag:none}
+  /* The folded sheet: three columns [left | middle | right] of the open inside.
+     base  = middle panel (inside middle / back cover)
+     flap  = folds in from the right (inside flap / inside right)
+     cover = folds in from the left (front cover / inside left) */
+  .tri{position:relative;flex:none;transform-style:preserve-3d;cursor:pointer;transition:transform .8s cubic-bezier(.35,.05,.2,1)}
+  .part{position:absolute;top:0;width:33.3334%;height:100%;transform-style:preserve-3d;transform-origin:right center;transition:transform .8s cubic-bezier(.35,.05,.2,1)}
+  .part.base,.part.flap{left:33.3333%}
+  .part.cover{left:0}
+  .face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden;background:#fff;box-shadow:0 14px 34px rgba(0,0,0,.42)}
   .face.back{transform:rotateY(180deg)}
-  .face.front{border-radius:0 6px 6px 0;box-shadow:inset 14px 0 18px -14px rgba(0,0,0,.35)}
-  .face.back{border-radius:6px 0 0 6px;box-shadow:inset -14px 0 18px -14px rgba(0,0,0,.35)}
-  .book::after{content:"";position:absolute;inset:0;border-radius:6px;box-shadow:0 18px 50px rgba(0,0,0,.55);pointer-events:none;z-index:-1}
-  .book.at-start::after{left:50%}
-  .book.at-end::after{right:50%}
+  .face img{width:100%;height:100%;display:block;object-fit:cover;user-select:none;-webkit-user-drag:none}
+  .face::after{content:"";position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
+  /* Closed parts sit just above the base so they never flicker into it */
+  .s0 .cover,.s3 .cover{transform:translateZ(2px) rotateY(180deg)}
+  .s0 .flap,.s1 .flap,.s3 .flap{transform:translateZ(1px)}
+  .s2 .flap{transform:rotateY(180deg)}
+  .tri.s1{transform:translateX(16.6667%)}
+  .tri.s3{transform:rotateY(180deg)}
 
   /* ===== Swipe mode (phones, portrait tablets) ===== */
   .track{position:fixed;inset:0;display:none;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
@@ -72,7 +79,7 @@
   .slide{flex:0 0 100%;width:100%;height:100%;scroll-snap-align:center;scroll-snap-stop:always;overflow-y:auto;overflow-x:hidden;padding:64px 12px calc(var(--bar) + 18px)}
   .slide img{display:block;width:100%;max-width:640px;height:auto;aspect-ratio:1100/2550;margin:0 auto;border-radius:8px;background:#1b3560;box-shadow:0 10px 30px rgba(0,0,0,.45)}
 
-  @media (prefers-reduced-motion:reduce){.leaf,.book{transition:none}.track{scroll-behavior:auto}}
+  @media (prefers-reduced-motion:reduce){.tri,.part{transition:none!important}.track{scroll-behavior:auto}}
   .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
   noscript{display:block;padding:80px 16px}
   noscript img{display:block;width:100%;max-width:560px;margin:0 auto 16px}
@@ -95,11 +102,11 @@
 
 <main aria-label="Next Step Guyana brochure">
   <h1 class="sr">Next Step Guyana brochure</h1>
-  <div class="stage" id="stage"><div class="book" id="book"></div></div>
+  <div class="stage" id="stage"><div class="tri s0" id="tri" role="img" aria-label="Brochure"></div></div>
   <div class="track" id="track"></div>
   <noscript>
-    <img src="brochure/panel-1.webp" alt="Brochure page 1"><img src="brochure/panel-2.webp" alt="Brochure page 2"><img src="brochure/panel-3.webp" alt="Brochure page 3">
-    <img src="brochure/panel-4.webp" alt="Brochure page 4"><img src="brochure/panel-5.webp" alt="Brochure page 5"><img src="brochure/panel-6.webp" alt="Brochure page 6">
+    <img src="brochure/panel-1.webp" alt="Front cover"><img src="brochure/panel-4.webp" alt="Getting into UG"><img src="brochure/panel-3.webp" alt="Results and choosing subjects">
+    <img src="brochure/panel-5.webp" alt="Other routes and CAPE"><img src="brochure/panel-6.webp" alt="Studying abroad"><img src="brochure/panel-2.webp" alt="Back cover: What we offer">
   </noscript>
 </main>
 
@@ -107,7 +114,7 @@
   <button class="nav" id="prev" type="button" aria-label="Previous page">
     <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
   </button>
-  <div class="label" aria-live="polite"><b id="lbl-name">Cover</b><span id="lbl-num">Page 1 of 6</span><div class="dots" id="dots" aria-hidden="true"></div></div>
+  <div class="label" aria-live="polite"><b id="lbl-name">Front cover</b><span id="lbl-num">Page 1 of 6</span><div class="dots" id="dots" aria-hidden="true"></div></div>
   <button class="nav" id="next" type="button" aria-label="Next page">
     <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
   </button>
@@ -115,21 +122,23 @@
 
 <script>
 (function () {
-  /* The six brochure panels in reading order (images in /brochure). */
+  /* The six panels in the order you read a tri-fold:
+     front cover -> open it (inside left + folded-in flap) -> open the flap (full inside) -> back cover.
+     f = which image file in /brochure (panel-1 = cover, 2 = back, 3 = flap, 4-6 = inside left/middle/right). */
   var P = [
-    { name: "Cover", alt: "Cover: Next Step Guyana, CSEC and CAPE. Free, student-led and online: mentor videos, ask anything, and Q&A events. Choose. Dream. Act." },
-    { name: "What we offer", alt: "What we offer: mentor-led sessions, Guyanese mentors, help with subjects, universities and scholarships, and leadership and career support. QR code to nextstepgy.org." },
-    { name: "Results and choosing subjects", alt: "Results not what you hoped: CXC script reviews, rewriting as a private candidate, UG's Qualifying Exam or IDCE foundation, GOAL's GROW programme. Choosing subjects: always take English A and Maths; take two sciences for health, engineering or tech. Try Navi." },
-    { name: "Getting into UG", alt: "At the University of Guyana, what do I need to get in: requirements for Medicine, Law, Engineering, Computer Science, Biology and health sciences, and Business, plus two routes into medicine." },
-    { name: "Other routes and CAPE", alt: "Beyond UG: teaching at CPCE, nursing, agriculture at GSA and technical training. Should I do CAPE: reasons to do it, reasons you might skip it, and the CAPE associate degree." },
-    { name: "Studying abroad", alt: "Studying abroad: UWI in the Caribbean, Canada and the United States, with how to apply, visas and costs. Ask a mentor who studied abroad at nextstepgy.org." }
+    { f: 1, name: "Front cover", alt: "Front cover: Next Step Guyana, CSEC and CAPE. Free, student-led and online: mentor videos, ask anything, and Q&A events. Choose. Dream. Act." },
+    { f: 4, name: "Getting into UG", alt: "Inside left, at the University of Guyana, what do I need to get in: requirements for Medicine, Law, Engineering, Computer Science, Biology and health sciences, and Business, plus two routes into medicine." },
+    { f: 3, name: "Results and choosing subjects", alt: "Inside flap. Results not what you hoped: CXC script reviews, rewriting as a private candidate, UG's Qualifying Exam or IDCE foundation, GOAL's GROW programme. Choosing subjects: always take English A and Maths; take two sciences for health, engineering or tech. Try Navi." },
+    { f: 5, name: "Other routes and CAPE", alt: "Inside middle. Beyond UG: teaching at CPCE, nursing, agriculture at GSA and technical training. Should I do CAPE: reasons to do it, reasons you might skip it, and the CAPE associate degree." },
+    { f: 6, name: "Studying abroad", alt: "Inside right. Studying abroad: UWI in the Caribbean, Canada and the United States, with how to apply, visas and costs. Ask a mentor who studied abroad at nextstepgy.org." },
+    { f: 2, name: "Back cover: What we offer", alt: "Back cover. What we offer: mentor-led sessions, Guyanese mentors, help with subjects, universities and scholarships, and leadership and career support. QR code to nextstepgy.org." }
   ];
-  var N = P.length, LEAVES = Math.ceil(N / 2), RATIO = 1100 / 2550;
-  var big = function (i) { return "brochure/panel-" + (i + 1) + ".webp"; };
-  var small = function (i) { return "brochure/panel-" + (i + 1) + "-sm.webp"; };
+  var N = P.length, RATIO = 1100 / 2550;
+  var big = function (i) { return "brochure/panel-" + P[i].f + ".webp"; };
+  var small = function (i) { return "brochure/panel-" + P[i].f + "-sm.webp"; };
   var esc = function (s) { return s.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;"); };
   var $ = function (id) { return document.getElementById(id); };
-  var body = document.body, book = $("book"), stage = $("stage"), track = $("track");
+  var body = document.body, tri = $("tri"), stage = $("stage"), track = $("track");
   var prevBtn = $("prev"), nextBtn = $("next"), zoomBtn = $("zoom"), zoomed = false;
 
   /* Close: go back if we came from this site, otherwise to Events */
@@ -142,56 +151,66 @@
   /* Position = which page is showing, 0..5 (shared by both modes) */
   var page = 0, mode = "";
 
-  /* ---------- Book mode: leaf i has page 2i on the front and 2i+1 on the back ---------- */
-  /* (Built only the first time the book view is needed, so phones never download it.) */
-  var leaves = [];
-  function buildBook() {
-    if (leaves.length) return;
-    for (var i = 0; i < LEAVES; i++) {
-      var f = 2 * i, b = 2 * i + 1;
-      var leaf = document.createElement("div");
-      leaf.className = "leaf";
-      leaf.innerHTML =
-        '<div class="face front"><img data-src="' + big(f) + '" alt="' + esc(P[f].alt) + '" draggable="false"></div>' +
-        '<div class="face back">' + (b < N ? '<img data-src="' + big(b) + '" alt="' + esc(P[b].alt) + '" draggable="false">' : "") + "</div>";
-      book.appendChild(leaf); leaves.push(leaf);
-    }
-    /* Pages showing now load first; the rest follow so page turns never show a blank page */
-    var imgs = [].slice.call(book.querySelectorAll("img[data-src]"));
+  /* ---------- Tri-fold mode ----------
+     Four steps, like holding the real thing:
+     0 closed (front cover) -> 1 cover opened -> 2 flap opened (full inside) -> 3 turned over (back cover) */
+  var STEPS = [
+    { title: "Front cover", sub: "Click to open" },
+    { title: "Cover opened", sub: "Getting into UG · Results and choosing subjects" },
+    { title: "Fully open", sub: "Getting into UG · Other routes and CAPE · Studying abroad" },
+    { title: "Back cover", sub: "What we offer" }
+  ];
+  var stepOf = function (p) { return [0, 1, 1, 2, 2, 3][p]; };   /* page (reading order) -> step */
+  var pageOf = function (st) { return [0, 1, 3, 5][st]; };         /* step -> first page shown */
+  var built = false, step = 0;
+  /* Built only the first time this view is needed, so phones never download it */
+  function buildTri() {
+    if (built) return; built = true;
+    var face = function (cls, i) { return '<div class="face ' + cls + '"><img data-src="' + big(i) + '" alt="' + esc(P[i].alt) + '" draggable="false"></div>'; };
+    tri.innerHTML =
+      '<div class="part base">' + face("front", 3) + face("back", 5) + "</div>" +   /* inside middle / back cover */
+      '<div class="part flap">' + face("front", 2) + face("back", 4) + "</div>" +   /* inside flap / inside right */
+      '<div class="part cover">' + face("front", 1) + face("back", 0) + "</div>";   /* inside left / front cover */
+    /* What's on screen loads first, the rest right after, so folds never reveal a blank panel */
+    var imgs = [].slice.call(tri.querySelectorAll("img[data-src]"));
     var load = function (img) { if (img.dataset.src) { img.src = img.dataset.src; img.removeAttribute("data-src"); } };
-    var s0 = spreadOf(page), firstIdx = s0 === 0 ? [0] : [2 * s0 - 1, 2 * s0];
-    firstIdx.forEach(function (k) { if (imgs[k]) load(imgs[k]); });
+    var firstPanel = { 0: 0, 1: 1, 2: 1, 3: 5 }[stepOf(page)];
+    var first = imgs.filter(function (im) { return im.dataset.src === big(firstPanel); })[0];
     var rest = function () { imgs.forEach(load); };
-    if (imgs[firstIdx[0]]) { imgs[firstIdx[0]].addEventListener("load", rest); imgs[firstIdx[0]].addEventListener("error", rest); } else rest();
+    if (first) { load(first); first.addEventListener("load", rest); first.addEventListener("error", rest); } else rest();
   }
-  /* Spread s (0..LEAVES) = number of leaves turned. Spread 0 = cover alone, last = back page alone. */
-  var spreadOf = function (p) { return Math.ceil(p / 2); };
-  function drawBook() {
-    var s = spreadOf(page);
-    leaves.forEach(function (lf, i) {
-      var turned = i < s;
-      lf.classList.toggle("flipped", turned);
-      /* Turned leaves stack left (latest on top); unturned stack right (next on top) */
-      lf.style.zIndex = turned ? i + 1 : LEAVES * 2 - i;
-    });
-    book.classList.toggle("at-start", s === 0);
-    book.classList.toggle("at-end", s === LEAVES && N % 2 === 0);
-    /* Centre the single cover / back page instead of leaving half the book empty */
-    var shift = s === 0 ? -25 : (s === LEAVES && N % 2 === 0 ? 25 : 0);
-    book.style.transform = "translateX(" + shift + "%)";
+  /* Small delays so the paper folds in a believable order */
+  function setDelays(from, to) {
+    var parts = { tri: tri, cover: tri.querySelector(".cover"), flap: tri.querySelector(".flap") };
+    var d = { tri: 0, cover: 0, flap: 0 };
+    if (from === 2 && to === 3) { d.cover = 0.15; d.tri = 0.55; }        /* close flap, close cover, then turn over */
+    else if (from === 3 && to === 2) { d.cover = 0.55; d.flap = 0.7; }   /* turn back, then open cover and flap */
+    else if (from === 3 && to < 2) { d.cover = to === 1 ? 0.55 : 0; }
+    else if (from < 2 && to === 3) { d.tri = 0.45; }
+    Object.keys(parts).forEach(function (k) { if (parts[k]) parts[k].style.transitionDelay = d[k] + "s"; });
   }
-  function sizeBook() {
+  function drawTri(animate) {
+    var to = stepOf(page);
+    if (animate) setDelays(step, to); else setDelays(-1, -1);
+    tri.className = "tri s" + to; step = to;
+    tri.setAttribute("aria-label", "Brochure, " + STEPS[to].title + ": " + STEPS[to].sub);
+  }
+  function sizeTri() {
     var cs = getComputedStyle(stage);
     var w = stage.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
     var h = stage.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
-    /* Fit the whole spread on screen; zoomed = fill the width (pages up to 1100px wide) and scroll down */
-    var ph = zoomed ? Math.min(1100, w / 2) / RATIO : Math.min(h, (w / 2) / RATIO), pw = ph * RATIO;
-    book.style.width = Math.floor(pw * 2) + "px"; book.style.height = Math.floor(ph) + "px";
+    /* Fit the open brochure on screen; zoomed = fill the width (panels up to 1100px wide) and scroll down */
+    var pw = zoomed ? Math.min(1100, w / 3) : Math.min(h * RATIO, w / 3);
+    tri.style.width = Math.floor(pw * 3) + "px"; tri.style.height = Math.floor(pw / RATIO) + "px";
   }
-  /* Click the right page to go forward, the left page to go back */
-  book.addEventListener("click", function (e) {
-    var r = book.getBoundingClientRect();
-    go(e.clientX > r.left + r.width / 2 ? 1 : -1);
+  /* Click the right side to unfold further, the left side to fold back */
+  tri.addEventListener("click", function (e) {
+    var st = stepOf(page);
+    if (st === 0) return go(1);
+    if (st === 3) return go(-1);
+    var r = tri.getBoundingClientRect(), third = r.width / 3;
+    var left = r.left + (st === 1 ? third / 2 : 0), right = left + (st === 1 ? 2 * third : 3 * third);
+    go(e.clientX > (left + right) / 2 ? 1 : -1);
   });
 
   /* ---------- Swipe mode: one page per screen, native swipe + scroll + pinch ---------- */
@@ -246,23 +265,23 @@
   /* ---------- Shared ---------- */
   var dots = $("dots");
   function label() {
-    var s, first, last;
+    var count, on, atStart, atEnd;
     if (mode === "book") {
-      s = spreadOf(page); first = s === 0 ? 0 : 2 * s - 1; last = Math.min(N - 1, s === 0 ? 0 : 2 * s);
-    } else { first = last = page; }
-    $("lbl-name").textContent = first === last ? P[first].name : P[first].name + " · " + P[last].name;
-    $("lbl-num").textContent = first === last ? "Page " + (first + 1) + " of " + N : "Pages " + (first + 1) + "–" + (last + 1) + " of " + N;
-    var count = mode === "book" ? LEAVES + 1 : N, on = mode === "book" ? spreadOf(page) : page;
+      var st = stepOf(page);
+      $("lbl-name").textContent = STEPS[st].title; $("lbl-num").textContent = STEPS[st].sub;
+      count = STEPS.length; on = st; atStart = st === 0; atEnd = st === STEPS.length - 1;
+    } else {
+      $("lbl-name").textContent = P[page].name; $("lbl-num").textContent = "Page " + (page + 1) + " of " + N;
+      count = N; on = page; atStart = page === 0; atEnd = page === N - 1;
+    }
     if (dots.children.length !== count) dots.innerHTML = new Array(count + 1).join("<i></i>");
     [].forEach.call(dots.children, function (d, i) { d.classList.toggle("on", i === on); });
-    var atStart = mode === "book" ? spreadOf(page) === 0 : page === 0;
-    var atEnd = mode === "book" ? spreadOf(page) === LEAVES : page === N - 1;
     prevBtn.disabled = atStart; nextBtn.disabled = atEnd;
   }
   function go(dir) {
     if (mode === "book") {
-      var s = Math.max(0, Math.min(LEAVES, spreadOf(page) + dir));
-      page = s === 0 ? 0 : 2 * s - 1; drawBook();
+      var st = Math.max(0, Math.min(STEPS.length - 1, stepOf(page) + dir));
+      page = pageOf(st); drawTri(true);
     } else {
       page = Math.max(0, Math.min(N - 1, page + dir)); loadSlide(page); drawSwipe(true); sharpen(page);
     }
@@ -273,8 +292,8 @@
     zoomBtn.setAttribute("aria-pressed", on ? "true" : "false");
     $("zoom-txt").textContent = on ? "Fit" : "Zoom";
     $("zoom-plus").style.display = on ? "none" : "";
-    zoomBtn.title = on ? "Fit the whole spread on screen (Z)" : "Make the pages bigger (Z)";
-    sizeBook(); stage.scrollTop = 0;
+    zoomBtn.title = on ? "Fit the whole brochure on screen (Z)" : "Make the pages bigger (Z)";
+    sizeTri(); stage.scrollTop = 0;
   }
   zoomBtn.addEventListener("click", function () { setZoom(!zoomed); });
   prevBtn.addEventListener("click", function () { go(-1); });
@@ -296,7 +315,7 @@
     if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) { e.preventDefault(); go(dx < 0 ? 1 : -1); }
   });
 
-  /* Book view when the screen is wide enough for two readable pages side by side; otherwise swipe view */
+  /* Tri-fold view when the screen is wide enough to show the open brochure; otherwise one panel at a time */
   function pickMode() {
     var w = window.innerWidth, h = window.innerHeight;
     return w >= 820 && w / h >= 1.15 ? "book" : "swipe";
@@ -309,7 +328,7 @@
       body.classList.toggle("swipe-mode", m === "swipe");
       if (m !== "book" && zoomed) { zoomed = false; body.classList.remove("zoomed"); }
     }
-    if (mode === "book") { buildBook(); sizeBook(); drawBook(); }
+    if (mode === "book") { buildTri(); sizeTri(); drawTri(false); }
     else { drawSwipe(false); queueSlides(); }
     label();
   }
