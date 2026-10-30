@@ -7,6 +7,9 @@
    The page shows the 5 newest first, with
    a "See all videos" button for the rest. Newest is worked out from the
    date, so the order here doesn't matter.
+   Videos posted in the last 14 days get a "New" tag automatically.
+   length is optional: the video's running time (e.g. "5:10"), shown
+   on the thumbnail.
    Add mentor: "Full Name" (spelled exactly as in data/mentors.js) to
    show a "See their mentor profile" link under the title.
 
@@ -24,6 +27,7 @@ window.VIDEOS = [
     title: "Study Abroad in the United States by Korphiena Stephen",
     youtube: "https://youtu.be/aLyC8GTBAYc",
     date: "2026-10-29",
+    length: "5:10",
     mentor: "Korphiena Stephen"
   },
 
@@ -31,6 +35,7 @@ window.VIDEOS = [
   //   title: "How to choose your CAPE subjects",
   //   youtube: "https://youtu.be/VIDEO_ID_HERE",
   //   date: "2026-11-15",
+  //   length: "8:42",
   //   mentor: "Full Name"
   // },
 
