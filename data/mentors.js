@@ -250,6 +250,21 @@ window.MENTORS = [
     email: "", instagram: "", linkedin: ""
   },
   {
+    name: "Joshua Singh",
+    school: "University of Guyana",
+    field: "Medicine",
+    topics: ["Medicine & Science", "CSEC & CAPE"],
+    highlights: [
+      "Second-year medical student, University of Guyana",
+      "Valedictorian, El Dorado East Secondary (Trinidad)",
+      "The Bishops' High School, CAPE 2024",
+      "CSEC Mathematics Tutor",
+      "Benhab Foundation Volunteer 2024"
+    ],
+    photo: "photos/joshua-singh.jpg",
+    email: "", instagram: "", linkedin: ""
+  },
+  {
     name: "Aaliyah Ashby",
     school: "University of Guyana",
     field: "Medicine",
