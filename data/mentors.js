@@ -129,11 +129,11 @@ window.MENTORS = [
     field: "CSEC",
     topics: ["CSEC & CAPE", "Youth Programs"],
     highlights: [
-      "Founder of LevelUp Academy for CSEC online learning",
       "Guyana's Youth Parliament Mentor",
-      "Harvard National Model United Nations Delegate (Panama 2025)",
+      "Guyana's Work-Study Programs",
       "Saint Stanislaus College Model United Nations",
-      "Guyana's Work-Study Programs"
+      "Harvard National Model United Nations Delegate (Panama 2025)",
+      "Founder of LevelUp Academy for CSEC online learning"
     ],
     photo: "photos/reginald-brown.jpg",
     email: "", instagram: "", linkedin: ""
