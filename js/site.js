@@ -192,9 +192,11 @@ window.NS = {
     var mon = dt.toLocaleString("en", { month: "short" });
     var wk = dt.toLocaleString("en", { weekday: "long" });
     var act = "";
-    if (past && s.recording) act = '<a class="btn btn-line" href="' + NS.esc(s.recording) + '" target="_blank" rel="noopener">Watch recording</a>';
-    else if (!past && s.joinLink) act = '<a class="btn btn-gold" href="' + NS.esc(s.joinLink) + '" target="_blank" rel="noopener">' + NS.esc(s.button || "Join event") + "</a>";
-    else if (!past) act = '<a class="btn btn-line" href="' + window.SITE.whatsapp + '" target="_blank" rel="noopener">Get the link on WhatsApp</a>';
+    /* A handout (e.g. the brochure) shows before and after the event and takes the place of the join button */
+    if (s.handout) act += '<a class="btn btn-gold" href="' + NS.esc(s.handout) + '">' + NS.esc(s.handoutButton || "View handout") + "</a>";
+    if (past && s.recording) act += '<a class="btn btn-line" href="' + NS.esc(s.recording) + '" target="_blank" rel="noopener">Watch recording</a>';
+    else if (!past && !s.handout && s.joinLink) act = '<a class="btn btn-gold" href="' + NS.esc(s.joinLink) + '" target="_blank" rel="noopener">' + NS.esc(s.button || "Join event") + "</a>";
+    else if (!past && !s.handout) act = '<a class="btn btn-line" href="' + window.SITE.whatsapp + '" target="_blank" rel="noopener">Get the link on WhatsApp</a>';
     return '<article class="session"><div class="sdate"><b>' + dt.getDate() + "</b><span>" + mon + " " + dt.getFullYear() + "</span></div>" +
       "<div>" + (s.theme ? '<span class="stheme">' + NS.esc(s.theme) + "</span>" : "") +
       "<h3>" + NS.esc(s.title) + "</h3>" +

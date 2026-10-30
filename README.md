@@ -11,6 +11,7 @@ A plain HTML/CSS/JavaScript site. There's no build step and no database. Open `i
 | News articles on the About page | `data/news.js` |
 | Community counter on the home page | `community` at the top of `js/site.js` |
 | Videos, handbooks (PDFs go in `/handbooks`) and links | `data/resources.js` |
+| Event brochure page (images and PDF in `/brochure`) | `brochure.html` |
 | Navi careers | `data/careers-guide.md`, then rebuild (see below) |
 | Navi stream subject lists | `STREAM_SUBJECTS` near the top of `js/navi.js` |
 | Email, WhatsApp, Instagram, TikTok links | top of `js/site.js` |

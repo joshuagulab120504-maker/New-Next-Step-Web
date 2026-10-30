@@ -16,6 +16,9 @@
    joinLink  Link students click to join or register (leave "" until you have it)
    button    Optional button text, e.g. "Register" (default "Join event")
    recording Link to the recording afterwards, e.g. a YouTube link
+   handout   Optional page or file to share (e.g. "brochure.html"). Shows a
+             button before AND after the event, and replaces the join button.
+   handoutButton  Text for that button (default "View handout")
    ===================================================================== */
 
 window.SESSIONS = [
@@ -27,9 +30,11 @@ window.SESSIONS = [
     time: "9:30 AM to 6:00 PM",
     where: "Atlantic Suites Hotel (Pegasus Exhibition Center), Seawall Road, Kingston, Georgetown",
     mentors: [],
-    about: "Hosted by EducationUSA at the U.S. Embassy in Guyana. Meet representatives from U.S. colleges, explore programmes from short courses to full degrees, and get your questions answered in person. Register in advance on Eventbrite.",
-    joinLink: "https://www.eventbrite.com/e/educationusa-guyana-college-fair-tickets-2001893890516",
-    button: "Register",
+    about: "Hosted by EducationUSA at the U.S. Embassy in Guyana. Meet representatives from U.S. colleges, explore programmes from short courses to full degrees, and get your questions answered in person. Didn't get our brochure at the fair? Read it online.",
+    joinLink: "",
+    button: "",
+    handout: "brochure.html",
+    handoutButton: "View our brochure",
     recording: ""
   },
 
