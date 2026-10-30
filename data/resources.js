@@ -19,7 +19,7 @@
 window.VIDEOS = [
 
   {
-    title: "Next Step Guyana - Studying Abroad in the United States by Korphiena Stephen",
+    title: "Study Abroad in the US",
     youtube: "https://youtu.be/aLyC8GTBAYc",
     date: "2026-10-29",
     mentor: "Korphiena Stephen"
