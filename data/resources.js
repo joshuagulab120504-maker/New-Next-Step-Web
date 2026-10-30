@@ -1,11 +1,12 @@
 /* =====================================================================
    RESOURCES: edit this file to add videos, handbooks and links.
 
-   Every video and handbook has a "level", which must be one of:
-   "CSEC", "CAPE" or "University". Students can filter by level.
-
-   VIDEOS (YouTube): paste only the video ID, the part after "v=" in a
-   link like https://www.youtube.com/watch?v=abc123XYZ  ->  "abc123XYZ"
+   VIDEOS (YouTube): paste the YouTube link (or just its ID), the date
+   it was posted, and the title. The page shows the 5 newest first, with
+   a "See all videos" button for the rest. Newest is worked out from the
+   date, so the order here doesn't matter.
+   Add mentor: "Full Name" (spelled exactly as in data/mentors.js) to
+   show a "See their mentor profile" link under the title.
 
    HANDBOOKS: put the PDF in the /handbooks folder and write its path,
    e.g. "handbooks/csec-subject-guide.pdf". You can also paste a full
@@ -15,22 +16,20 @@
    each line, and fill it in.
    ===================================================================== */
 
-window.RESOURCE_LEVELS = ["CSEC", "CAPE", "University"];
-
 window.VIDEOS = [
 
   {
-    title: "Studying abroad in the United States",
-    level: "University",
-    youtube: "aLyC8GTBAYc",
-    description: "Korphiena Stephen, Bishops' valedictorian now studying Biomedical Engineering at Purdue, on applying to and studying at a US university."
+    title: "Next Step Guyana - Studying Abroad in the United States by Korphiena Stephen",
+    youtube: "https://youtu.be/aLyC8GTBAYc",
+    date: "2026-10-29",
+    mentor: "Korphiena Stephen"
   },
 
   // {
   //   title: "How to choose your CAPE subjects",
-  //   level: "CAPE",
-  //   youtube: "VIDEO_ID_HERE",
-  //   description: "Our mentors explain how they picked their subjects and what they'd do differently."
+  //   youtube: "https://youtu.be/VIDEO_ID_HERE",
+  //   date: "2026-11-15",
+  //   mentor: "Full Name"
   // },
 
 ];
@@ -39,7 +38,6 @@ window.HANDBOOKS = [
 
   // {
   //   title: "CSEC study handbook",
-  //   level: "CSEC",
   //   file: "handbooks/csec-study-handbook.pdf",
   //   description: "Subject tips, revision timetables and exam-day advice from top CSEC performers."
   // },

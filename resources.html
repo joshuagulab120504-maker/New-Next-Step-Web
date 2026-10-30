@@ -22,11 +22,10 @@
 
   <section class="section-tight">
     <div class="wrap">
-      <div class="chips" id="levels" role="group" aria-label="Filter by level"></div>
-
       <div class="res-block">
         <h2>Videos</h2>
         <div id="videos"></div>
+        <div class="vmore" id="vmore" hidden><button class="btn btn-line" type="button" id="vmore-btn" aria-controls="videos" aria-expanded="false"></button></div>
       </div>
 
       <div class="res-block">
@@ -46,54 +45,79 @@
 <div id="site-footer"></div>
 
 <script src="data/resources.js"></script>
+<script src="data/mentors.js"></script>
 <script src="js/site.js"></script>
 <script>
 (function () {
-  var V = window.VIDEOS || [], B = window.HANDBOOKS || [], L = window.LINKS || [];
-  var levels = ["All"].concat(window.RESOURCE_LEVELS || []);
-  var level = "All";
+  var SHOW = 5; /* how many videos show before "See all videos" */
+  var B = window.HANDBOOKS || [], L = window.LINKS || [], M = window.MENTORS || [];
   var host = function (u) { try { return new URL(u, location.href).host.replace(/^www\./, ""); } catch (e) { return ""; } };
-  var match = function (x) { return level === "All" || x.level === level; };
-
-  var chips = document.getElementById("levels");
-  levels.forEach(function (l) {
-    var b = document.createElement("button");
-    b.type = "button"; b.className = "chip"; b.textContent = l;
-    b.setAttribute("aria-pressed", l === level ? "true" : "false");
-    b.addEventListener("click", function () {
-      level = l;
-      [].forEach.call(chips.children, function (c) { c.setAttribute("aria-pressed", c === b ? "true" : "false"); });
-      draw();
-    });
-    chips.appendChild(b);
-  });
+  /* Accepts a full YouTube link (youtu.be/…, watch?v=…, shorts/…) or just the ID */
+  var ytId = function (v) {
+    var m = String(v || "").match(/(?:youtu\.be\/|[?&]v=|\/(?:embed|shorts|live)\/)([\w-]{11})/);
+    return m ? m[1] : String(v || "").trim();
+  };
+  var mentorOf = function (name) {
+    var n = String(name || "").trim().toLowerCase();
+    return n ? M.filter(function (m) { return m.name.toLowerCase() === n; })[0] : null;
+  };
+  /* Newest first by date; videos without a date keep their order at the end */
+  var V = (window.VIDEOS || []).map(function (v, i) { return { v: v, i: i }; })
+    .sort(function (a, b) {
+      var da = a.v.date || "", db = b.v.date || "";
+      if (da !== db) return da && db ? (da < db ? 1 : -1) : (da ? -1 : 1);
+      return a.i - b.i;
+    }).map(function (x) { return x.v; });
 
   function empty(title, text) {
     return '<div class="empty-state"><div><h3>' + title + "</h3><p>" + text + "</p></div>" +
       '<a class="btn btn-navy" href="' + SITE.whatsapp + '" target="_blank" rel="noopener">Get notified on WhatsApp</a></div>';
   }
-  function draw() {
-    var lvl = level === "All" ? "" : " for " + level;
-    var vids = V.filter(match), books = B.filter(match);
 
-    document.getElementById("videos").innerHTML = vids.length
-      ? '<div class="videos">' + vids.map(function (v) {
-          return '<div class="video"><div class="frame"><iframe src="https://www.youtube-nocookie.com/embed/' + encodeURIComponent(v.youtube) +
-            '" title="' + NS.esc(v.title) + '" loading="lazy" allow="accelerometer; encrypted-media; picture-in-picture" allowfullscreen></iframe></div>' +
-            '<div class="vt"><span class="lvl">' + NS.esc(v.level) + "</span><b>" + NS.esc(v.title) + "</b>" +
-            (v.description ? "<p>" + NS.esc(v.description) + "</p>" : "") + "</div></div>";
-        }).join("") + "</div>"
-      : empty("Videos" + lvl + " are on the way", "We're recording Q&amp;A events and short guides with our mentors. They'll appear here as soon as they're ready.");
-
-    document.getElementById("handbooks").innerHTML = books.length
-      ? '<div class="books">' + books.map(function (h) {
-          return '<a class="book" href="' + NS.esc(h.file) + '" target="_blank" rel="noopener">' +
-            '<span class="book-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></svg></span>' +
-            '<span class="book-text"><span class="lvl">' + NS.esc(h.level) + "</span><b>" + NS.esc(h.title) + "</b>" +
-            (h.description ? "<span>" + NS.esc(h.description) + "</span>" : "") + '<em>Open handbook</em></span></a>';
-        }).join("") + "</div>"
-      : empty("Handbooks" + lvl + " are on the way", "Our mentors are writing handbooks on CSEC, CAPE and university applications. Each one will be free to read and download here.");
+  function videoCard(v, i) {
+    var m = mentorOf(v.mentor), first = m ? m.name.split(" ")[0] : "";
+    return '<article class="video' + (i === 0 ? " lead" : "") + '">' +
+      '<div class="frame"><iframe src="https://www.youtube-nocookie.com/embed/' + encodeURIComponent(ytId(v.youtube)) + '?rel=0"' +
+      ' title="' + NS.esc(v.title) + '" loading="lazy" allow="accelerometer; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe></div>' +
+      '<div class="vt"><h3>' + NS.esc(v.title) + "</h3>" +
+      (v.description ? "<p>" + NS.esc(v.description) + "</p>" : "") +
+      (m ? '<button class="vmentor" type="button" data-mentor="' + NS.esc(m.name) + '" aria-haspopup="dialog">' +
+           '<span class="vava">' + NS.photo(m, "") + "</span><span>See " + NS.esc(first) + "'s mentor profile</span></button>" : "") +
+      "</div></article>";
   }
+
+  var box = document.getElementById("videos"), more = document.getElementById("vmore"), moreBtn = document.getElementById("vmore-btn");
+  var all = false;
+  function drawVideos() {
+    if (!V.length) {
+      box.innerHTML = empty("Videos are on the way", "We're recording Q&amp;A events and short guides with our mentors. They'll appear here as soon as they're ready.");
+      more.hidden = true; return;
+    }
+    var list = all ? V : V.slice(0, SHOW);
+    box.innerHTML = '<div class="videos">' + list.map(videoCard).join("") + "</div>";
+    more.hidden = V.length <= SHOW;
+    moreBtn.textContent = all ? "Show fewer videos" : "See all " + V.length + " videos";
+    moreBtn.setAttribute("aria-expanded", all ? "true" : "false");
+  }
+  moreBtn.addEventListener("click", function () {
+    all = !all; drawVideos();
+    if (all) { var next = box.querySelectorAll(".video")[SHOW]; if (next) next.scrollIntoView({ behavior: "smooth", block: "start" }); }
+    else box.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+  box.addEventListener("click", function (e) {
+    var b = e.target.closest(".vmentor");
+    if (b) NS.openProfile(mentorOf(b.getAttribute("data-mentor")));
+  });
+  drawVideos();
+
+  document.getElementById("handbooks").innerHTML = B.length
+    ? '<div class="books">' + B.map(function (h) {
+        return '<a class="book" href="' + NS.esc(h.file) + '" target="_blank" rel="noopener">' +
+          '<span class="book-icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></svg></span>' +
+          '<span class="book-text"><b>' + NS.esc(h.title) + "</b>" +
+          (h.description ? "<span>" + NS.esc(h.description) + "</span>" : "") + '<em>Open handbook</em></span></a>';
+      }).join("") + "</div>"
+    : empty("Handbooks are on the way", "Our mentors are writing handbooks on CSEC, CAPE and university applications. Each one will be free to read and download here.");
 
   var cats = window.LINK_CATEGORIES || [];
   document.getElementById("links").innerHTML = cats.map(function (c) {
@@ -105,8 +129,6 @@
           (r.description ? "<span>" + NS.esc(r.description) + "</span>" : "") + "<small>" + NS.esc(host(r.url)) + "</small></a>";
       }).join("") + "</div></div>";
   }).join("");
-
-  draw();
 })();
 </script>
 </body>
