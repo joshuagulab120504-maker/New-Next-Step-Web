@@ -10,7 +10,7 @@ window.SITE = {
      emailing (each mentor's own email, or the team email if they have none). */
   mentorContact: "https://wa.me/message/C2S5KQM6RXLVD1",
   /* Number shown in the "Community" counter on the home page */
-  community: 693
+  community: 739
 };
 
 /* ----- You shouldn't need to edit below this line ----- */
