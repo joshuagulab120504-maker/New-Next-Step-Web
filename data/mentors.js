@@ -125,8 +125,8 @@ window.MENTORS = [
   },
   {
     name: "Reginald Brown",
-    school: "St. Stanislaus College",
-    field: "CSEC",
+    school: "University of Guyana",
+    field: "",
     topics: ["CSEC & CAPE", "Youth Programs"],
     highlights: [
       "Guyana's Youth Parliament Mentor",
@@ -378,7 +378,7 @@ window.MENTORS = [
   },
   {
     name: "Breanne Boucher",
-    school: "University of Guyana",
+    school: "Hugh Wooding Law School, Trinidad and Tobago",
     field: "Law",
     topics: ["Law & Humanities"],
     highlights: [
@@ -391,7 +391,7 @@ window.MENTORS = [
   },
   {
     name: "Theresa Nacimento",
-    school: "University of Guyana",
+    school: "Hugh Wooding Law School, Trinidad and Tobago",
     field: "Law",
     topics: ["Law & Humanities"],
     highlights: [
