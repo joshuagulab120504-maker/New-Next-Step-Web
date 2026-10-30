@@ -19,6 +19,13 @@ window.RESOURCE_LEVELS = ["CSEC", "CAPE", "University"];
 
 window.VIDEOS = [
 
+  {
+    title: "Studying abroad in the United States",
+    level: "University",
+    youtube: "aLyC8GTBAYc",
+    description: "Korphiena Stephen, Bishops' valedictorian now studying Biomedical Engineering at Purdue, on applying to and studying at a US university."
+  },
+
   // {
   //   title: "How to choose your CAPE subjects",
   //   level: "CAPE",
