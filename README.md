@@ -10,7 +10,7 @@ A plain HTML/CSS/JavaScript site. There's no build step and no database. Open `i
 | Q&A events (announce, add join or register links, add recordings) | `data/sessions.js` |
 | News articles on the About page | `data/news.js` |
 | Community counter on the home page | `community` at the top of `js/site.js` |
-| Videos, handbooks (PDFs go in `/handbooks`) and links | `data/resources.js` |
+| Videos, handbooks (PDFs go in `/handbooks`) and links | `data/resources.js` (after adding a video, run `node tools/build-video-pages.js`) |
 | Event brochure page (images and PDF in `/brochure`) | `brochure.html` |
 | Navi careers | `data/careers-guide.md`, then rebuild (see below) |
 | Navi stream subject lists | `STREAM_SUBJECTS` near the top of `js/navi.js` |
@@ -53,3 +53,15 @@ The `_redirects` file sends your old Google Sites addresses (like `/home`, `/vie
 ## Using nextstepgy.org
 
 In Cloudflare, add `nextstepgy.org` as a domain and switch its nameservers (at the company where the domain was bought) to the two Cloudflare gives you. Once it is active, open the Pages project, go to **Custom domains**, and add both `nextstepgy.org` and `www.nextstepgy.org`.
+
+## Video share links
+
+Each video's **Share** button sends a link like `nextstepgy.org/v/VIDEOID`. That small page gives WhatsApp, Instagram and iMessage the video's own thumbnail and title for the link preview, then sends people to the video on Resources.
+
+After adding or changing a video in `data/resources.js`, rebuild those pages and commit the `v/` folder:
+
+```
+node tools/build-video-pages.js
+```
+
+If you forget, the link still works (it opens the video), but the preview shows the site's default picture.

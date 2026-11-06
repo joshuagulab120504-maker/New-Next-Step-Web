@@ -10,6 +10,8 @@
    Videos posted in the last 14 days get a "New" tag automatically.
    length is optional: the video's running time (e.g. "5:10"), shown
    on the thumbnail.
+   After adding a video, run: node tools/build-video-pages.js
+   (makes the share link preview show the video's thumbnail; see README).
    Add mentor: "Full Name" (spelled exactly as in data/mentors.js) to
    show a "See their mentor profile" link under the title.
 
