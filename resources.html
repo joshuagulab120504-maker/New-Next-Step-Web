@@ -158,6 +158,21 @@
   });
   drawVideos();
 
+  /* Share links use /v/VIDEOID (preview shows the video's thumbnail). If that page hasn't been
+     built yet (tools/build-video-pages.js), fall back to a link that still opens the video. */
+  var checked = {};
+  function checkShareLinks() {
+    [].forEach.call(box.querySelectorAll(".vshare"), function (a) {
+      var id = a.closest(".video").id.slice(2);
+      var fix = function () { a.href = a.href.replace(encodeURIComponent("/v/" + id), encodeURIComponent("/resources#v-" + id)); };
+      if (checked[id] === false) return fix();
+      if (checked[id]) return;
+      fetch("/v/" + id, { method: "HEAD" }).then(function (r) { checked[id] = r.ok; if (!r.ok) fix(); }).catch(function () {});
+    });
+  }
+  checkShareLinks();
+  moreBtn.addEventListener("click", function () { setTimeout(checkShareLinks, 0); });
+
   /* Shared links (resources#v-VIDEOID) open the page at that video */
   var want = decodeURIComponent(location.hash.slice(1));
   if (/^v-[\w-]{11}$/.test(want)) {
