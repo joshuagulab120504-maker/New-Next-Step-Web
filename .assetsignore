@@ -1,0 +1,5 @@
+# Files in the repo that should not be published on the website
+README.md
+.gitignore
+tools/
+handbooks/README.txt

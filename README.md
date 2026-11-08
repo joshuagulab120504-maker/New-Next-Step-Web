@@ -65,3 +65,8 @@ node tools/build-video-pages.js
 ```
 
 If you forget, the link still works (it opens the video), but the preview shows the site's default picture.
+
+## Security settings
+
+- `_headers` adds security headers to every page (HTTPS-only, no framing by other sites, a content policy that only allows this site, YouTube and Cloudflare's visitor stats). If you ever add something that loads from another website, add that site to the `Content-Security-Policy` line or it will be blocked.
+- `.assetsignore` keeps behind-the-scenes files (this README, `tools/`) off the public website.
