@@ -373,3 +373,37 @@ details.q .a p + p{margin-top:12px}
 .news-read{margin-top:auto;padding-top:8px;font-weight:700;font-size:14.5px;color:var(--night)}
 @media (max-width:900px){.news{grid-template-columns:1fr}}
 
+
+/* ---------- Event photo gallery + viewer ---------- */
+.sgallery{grid-column:1/-1;border-top:1px solid var(--line);padding-top:18px}
+.sglabel{font-weight:700;font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--slate);margin-bottom:10px}
+.sgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+@media (min-width:720px){.sgrid{grid-template-columns:repeat(6,1fr)}}
+.sg-thumb{position:relative;display:block;aspect-ratio:1;padding:0;border:0;border-radius:10px;overflow:hidden;cursor:pointer;background:var(--paper)}
+.sg-thumb picture,.sg-thumb img{display:block;width:100%;height:100%}
+.sg-thumb img{object-fit:cover;transition:transform .25s}
+.sg-thumb:hover img{transform:scale(1.05)}
+.sg-thumb:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.sg-more{position:absolute;inset:0;display:grid;place-items:center;background:rgba(11,31,58,.62);color:#fff;font-weight:800;font-size:22px}
+.lightbox{border:0;padding:0;margin:0;width:100vw;height:100vh;height:100dvh;max-width:none;max-height:none;background:rgba(5,14,28,.96);color:#fff}
+.lightbox::backdrop{background:rgba(5,14,28,.96)}
+.lb-top{position:absolute;top:0;left:0;right:0;height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;z-index:2;font-size:15px}
+.lb-stage{position:absolute;inset:60px 64px 16px;margin:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px}
+.lb-stage img{max-width:100%;max-height:calc(100% - 52px);width:auto;height:auto;border-radius:8px;box-shadow:0 10px 40px rgba(0,0,0,.5)}
+.lb-stage figcaption{font-size:15px;color:#dbe3ee;text-align:center;max-width:46em;line-height:1.4}
+.lightbox button{font:inherit;color:#fff;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:999px;cursor:pointer}
+.lightbox button:hover{background:rgba(255,255,255,.24)}
+.lb-close{width:44px;height:44px;font-size:26px;line-height:1}
+.lb-nav{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:48px;font-size:28px;line-height:1;z-index:2}
+.lb-prev{left:10px}.lb-next{right:10px}
+@media (max-width:640px){.lb-stage{inset:60px 8px 70px}.lb-nav{top:auto;bottom:12px;transform:none}.lb-prev{left:calc(50% - 60px)}.lb-next{right:calc(50% - 60px)}}
+
+/* ---------- About: photo strip ---------- */
+.outreach{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:22px}
+.outreach a{display:block;border-radius:var(--r-lg);overflow:hidden;aspect-ratio:4/5;background:var(--paper)}
+.outreach picture,.outreach img{display:block;width:100%;height:100%}
+.outreach img{object-fit:cover;transition:transform .3s}
+.outreach a:hover img{transform:scale(1.03)}
+@media (max-width:640px){.outreach{grid-template-columns:1fr 1fr}.outreach a:first-child{grid-column:1/-1;aspect-ratio:16/10}}
+.outreach-note{color:var(--slate);margin-top:12px;font-size:15px}
+.session{scroll-margin-top:90px}

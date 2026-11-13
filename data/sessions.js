@@ -19,6 +19,12 @@
    handout   Optional page or file to share (e.g. "brochure.html"). Shows a
              button before AND after the event, and replaces the join button.
    handoutButton  Text for that button (default "View handout")
+   id        Optional short name so other pages can link to the event,
+             e.g. "college-fair-2026" -> events.html#college-fair-2026
+   photos    Optional gallery shown on the event card. Each photo is
+             { src: "folder/01", alt: "what's in the photo" }. The folder
+             needs 01.webp (large), 01-sm.webp and 01-sm.jpg (small).
+             Ask Claude to prepare new photos; it sizes them for phones.
    ===================================================================== */
 
 window.SESSIONS = [
@@ -35,7 +41,19 @@ window.SESSIONS = [
     button: "",
     handout: "brochure.html",
     handoutButton: "View our brochure",
-    recording: ""
+    recording: "",
+    id: "college-fair-2026",
+    photos: [
+      { src: "assets/gallery/college-fair-2026/01", alt: "A full room of students raising their hands during a session at the college fair" },
+      { src: "assets/gallery/college-fair-2026/02", alt: "A Next Step mentor answering questions from a group of students at our table" },
+      { src: "assets/gallery/college-fair-2026/03", alt: "A Next Step mentor going through brochures with three students" },
+      { src: "assets/gallery/college-fair-2026/04", alt: "A Next Step mentor handing our brochure to a smiling student" },
+      { src: "assets/gallery/college-fair-2026/05", alt: "Two Next Step Guyana team members at our table, with brochures and our banner" },
+      { src: "assets/gallery/college-fair-2026/06", alt: "A Next Step mentor with a group of students at our booth, the website open on a laptop" },
+      { src: "assets/gallery/college-fair-2026/07", alt: "Mentor Joshua Singh showing our brochure to a visitor" },
+      { src: "assets/gallery/college-fair-2026/08", alt: "Three students in front of the Next Step Guyana banner" },
+      { src: "assets/gallery/college-fair-2026/09", alt: "Our banner and the Next Step Guyana website on a laptop at the fair" }
+    ]
   },
 
   // {

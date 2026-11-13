@@ -197,13 +197,76 @@ window.NS = {
     if (past && s.recording) act += '<a class="btn btn-line" href="' + NS.esc(s.recording) + '" target="_blank" rel="noopener">Watch recording</a>';
     else if (!past && !s.handout && s.joinLink) act = '<a class="btn btn-gold" href="' + NS.esc(s.joinLink) + '" target="_blank" rel="noopener">' + NS.esc(s.button || "Join event") + "</a>";
     else if (!past && !s.handout) act = '<a class="btn btn-line" href="' + window.SITE.whatsapp + '" target="_blank" rel="noopener">Get the link on WhatsApp</a>';
-    return '<article class="session"><div class="sdate"><b>' + dt.getDate() + "</b><span>" + mon + " " + dt.getFullYear() + "</span></div>" +
+    var gal = "";
+    if (s.photos && s.photos.length) {
+      var gi = NS._galleries.push(s.photos) - 1, SHOWN = 6;
+      gal = '<div class="sgallery"><p class="sglabel">Photos from the day · ' + s.photos.length + "</p><div class=\"sgrid\">" +
+        s.photos.slice(0, SHOWN).map(function (ph, i) {
+          var more = i === SHOWN - 1 && s.photos.length > SHOWN ? s.photos.length - SHOWN : 0;
+          return '<button class="sg-thumb" type="button" data-gal="' + gi + '" data-i="' + i + '" aria-label="Open photo ' + (i + 1) + " of " + s.photos.length + ": " + NS.esc(ph.alt) + '">' +
+            NS.pic(ph, "(min-width:720px) 190px, 31vw") + (more ? '<span class="sg-more">+' + more + "</span>" : "") + "</button>";
+        }).join("") + "</div></div>";
+    }
+    return '<article class="session"' + (s.id ? ' id="' + NS.esc(s.id) + '"' : "") + '><div class="sdate"><b>' + dt.getDate() + "</b><span>" + mon + " " + dt.getFullYear() + "</span></div>" +
       "<div>" + (s.theme ? '<span class="stheme">' + NS.esc(s.theme) + "</span>" : "") +
       "<h3>" + NS.esc(s.title) + "</h3>" +
       '<p class="smeta">' + wk + (s.time ? ", " + NS.esc(s.time) : "") + "</p>" +
       (s.where ? '<p class="swhere">' + NS.esc(s.where) + "</p>" : "") +
       (s.about ? '<p class="sabout">' + NS.esc(s.about) + "</p>" : "") +
       (s.mentors && s.mentors.length ? '<p class="smentors"><b>With</b> ' + s.mentors.map(NS.esc).join(", ") + "</p>" : "") +
-      "</div>" + (act ? '<div class="sact">' + act + "</div>" : "") + "</article>";
+      "</div>" + (act ? '<div class="sact">' + act + "</div>" : "") + gal + "</article>";
+  },
+
+  /* ---------- Photos ---------- */
+  _galleries: [],
+  /* <picture> for a gallery photo { src: "folder/01", alt } (small WebP, JPG for older browsers) */
+  pic: function (ph, sizes) {
+    return '<picture><source type="image/webp" srcset="' + NS.esc(ph.src) + "-sm.webp 640w, " + NS.esc(ph.src) + '.webp 1600w" sizes="' + sizes + '">' +
+      '<img src="' + NS.esc(ph.src) + '-sm.jpg" alt="' + NS.esc(ph.alt) + '" loading="lazy" decoding="async"></picture>';
+  },
+  /* Full-screen photo viewer: arrows, swipe, keyboard, Esc to close */
+  openGallery: function (photos, start) {
+    var d = document.getElementById("lightbox");
+    if (!d) {
+      d = document.createElement("dialog");
+      d.id = "lightbox"; d.className = "lightbox"; d.setAttribute("aria-label", "Photo viewer");
+      d.innerHTML = '<div class="lb-top"><span class="lb-count" aria-live="polite"></span>' +
+        '<button class="lb-close" type="button" aria-label="Close">\u00d7</button></div>' +
+        '<figure class="lb-stage"><img alt=""><figcaption></figcaption></figure>' +
+        '<button class="lb-nav lb-prev" type="button" aria-label="Previous photo">\u2039</button>' +
+        '<button class="lb-nav lb-next" type="button" aria-label="Next photo">\u203a</button>';
+      document.body.appendChild(d);
+      var x0 = null;
+      d.querySelector(".lb-close").addEventListener("click", function () { d.close(); });
+      d.querySelector(".lb-prev").addEventListener("click", function () { d._show(d._i - 1); });
+      d.querySelector(".lb-next").addEventListener("click", function () { d._show(d._i + 1); });
+      d.addEventListener("click", function (e) { if (e.target === d || e.target.classList.contains("lb-stage")) d.close(); });
+      d.addEventListener("keydown", function (e) {
+        if (e.key === "ArrowRight") d._show(d._i + 1); else if (e.key === "ArrowLeft") d._show(d._i - 1);
+      });
+      d.addEventListener("touchstart", function (e) { x0 = e.touches.length === 1 ? e.touches[0].clientX : null; }, { passive: true });
+      d.addEventListener("touchend", function (e) {
+        if (x0 === null) return; var dx = e.changedTouches[0].clientX - x0; x0 = null;
+        if (Math.abs(dx) > 45) d._show(d._i + (dx < 0 ? 1 : -1));
+      });
+      d.addEventListener("close", function () { document.documentElement.style.overflow = ""; });
+    }
+    var img = d.querySelector("img"), cap = d.querySelector("figcaption");
+    d._show = function (i) {
+      d._i = (i + photos.length) % photos.length;
+      var ph = photos[d._i], big = ph.src + ".webp";
+      /* Show the small version straight away (already loaded), then swap in the sharp one */
+      img.src = ph.src + "-sm.jpg"; img.alt = ph.alt; cap.textContent = ph.alt;
+      var hi = new Image(); hi.onload = function () { if (photos[d._i] === ph) img.src = big; }; hi.src = big;
+      new Image().src = photos[(d._i + 1) % photos.length].src + ".webp";
+      d.querySelector(".lb-count").textContent = (d._i + 1) + " / " + photos.length;
+    };
+    d._show(start || 0);
+    if (typeof d.showModal === "function") { d.showModal(); document.documentElement.style.overflow = "hidden"; }
+    else window.open(photos[start || 0].src + ".webp", "_blank");
   }
 };
+document.addEventListener("click", function (e) {
+  var t = e.target.closest && e.target.closest(".sg-thumb");
+  if (t) NS.openGallery(NS._galleries[+t.getAttribute("data-gal")], +t.getAttribute("data-i"));
+});

@@ -56,6 +56,8 @@
     document.getElementById("past").innerHTML = "<h2>Past events</h2>" +
       s.past.map(function (x) { return NS.sessionHTML(x, true); }).join("");
   }
+  var target = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+  if (target) setTimeout(function () { target.scrollIntoView({ block: "start" }); }, 0);
 })();
 </script>
 </body>
