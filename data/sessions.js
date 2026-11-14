@@ -36,7 +36,7 @@ window.SESSIONS = [
     time: "9:30 AM to 6:00 PM",
     where: "Pegasus Exhibition Center, Georgetown",
     mentors: [],
-    about: "Hosted by EducationUSA. We met students and shared our brochure.",
+    about: "A collaboration with the U.S. Embassy that allowed us to interact with students, have our mentors share advice, and introduce our new tool, Navi.",
     joinLink: "",
     button: "",
     handout: "brochure.html",
