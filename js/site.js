@@ -232,7 +232,7 @@ window.NS = {
       d.id = "lightbox"; d.className = "lightbox"; d.setAttribute("aria-label", "Photo viewer");
       d.innerHTML = '<div class="lb-top"><span class="lb-count" aria-live="polite"></span>' +
         '<button class="lb-close" type="button" aria-label="Close">\u00d7</button></div>' +
-        '<figure class="lb-stage"><img alt=""><figcaption></figcaption></figure>' +
+        '<figure class="lb-stage"><img alt=""></figure>' +
         '<button class="lb-nav lb-prev" type="button" aria-label="Previous photo">\u2039</button>' +
         '<button class="lb-nav lb-next" type="button" aria-label="Next photo">\u203a</button>';
       document.body.appendChild(d);
@@ -251,12 +251,12 @@ window.NS = {
       });
       d.addEventListener("close", function () { document.documentElement.style.overflow = ""; });
     }
-    var img = d.querySelector("img"), cap = d.querySelector("figcaption");
+    var img = d.querySelector("img");
     d._show = function (i) {
       d._i = (i + photos.length) % photos.length;
       var ph = photos[d._i], big = ph.src + ".webp";
       /* Show the small version straight away (already loaded), then swap in the sharp one */
-      img.src = ph.src + "-sm.jpg"; img.alt = ph.alt; cap.textContent = ph.alt;
+      img.src = ph.src + "-sm.jpg"; img.alt = ph.alt; /* alt text stays for screen readers; no visible caption */
       var hi = new Image(); hi.onload = function () { if (photos[d._i] === ph) img.src = big; }; hi.src = big;
       new Image().src = photos[(d._i + 1) % photos.length].src + ".webp";
       d.querySelector(".lb-count").textContent = (d._i + 1) + " / " + photos.length;
