@@ -113,15 +113,16 @@ window.NS = {
     return ini + '<img src="' + NS.esc(m.photo) + '" alt="' + NS.esc(alt || "") + '" loading="lazy" onerror="this.remove()">';
   },
   /* Short labels for the "Helps with" tags on mentor cards */
+  /* How each topic shows on mentor cards and profiles */
   topicLabel: {
-    "CSEC & CAPE": "CSEC & CAPE",
-    "Study Abroad & Scholarships": "Study abroad",
-    "Business & Economics": "Business",
-    "Engineering & Tech": "Engineering",
-    "Medicine & Science": "Medicine",
-    "Law & Humanities": "Law",
-    "Careers & Skills": "Career guidance",
-    "Youth Programs": "Youth programs"
+    "CSEC & CAPE": "#CSEC #CAPE",
+    "Study Abroad & Scholarships": "#StudyAbroad",
+    "Business & Economics": "#Business",
+    "Engineering & Tech": "#Engineering",
+    "Medicine & Science": "#Medicine",
+    "Law & Humanities": "#Law",
+    "Careers & Skills": "#Careers",
+    "Youth Programs": "#YouthPrograms"
   },
   card: function (m, i) {
     var tags = (m.topics || []).slice(0, 3).map(function (t) {
@@ -160,7 +161,7 @@ window.NS = {
       '<div class="pgrid"><div class="pphoto">' + NS.photo(m, "Photo of " + m.name) + "</div>" +
       '<div class="pbody"><h2 id="p-name">' + NS.esc(m.name) + "</h2>" +
       '<p class="pmeta">' + NS.esc(m.school) + (m.field ? "<br>" + NS.esc(m.field) : "") + "</p>" +
-      '<div class="ptopics">' + (m.topics || []).map(function (t) { return "<span>" + NS.esc(t) + "</span>"; }).join("") + "</div>" +
+      '<div class="ptopics">' + (m.topics || []).map(function (t) { return "<span>" + NS.esc(NS.topicLabel[t] || t) + "</span>"; }).join("") + "</div>" +
       "<ul>" + m.highlights.map(function (h) { return "<li>" + NS.esc(h) + "</li>"; }).join("") + "</ul>" +
       '<div class="pcontact"><a class="btn btn-gold" href="' + (S.mentorContact || mail) + '"' + (S.mentorContact ? ' target="_blank" rel="noopener"' : "") + '>Contact ' + NS.esc(first) + "</a>" + links + "</div>" +
       (S.mentorContact

@@ -143,14 +143,14 @@ p{margin:0}
 .mbody{padding:16px 18px 18px;display:flex;flex-direction:column;gap:4px;flex:1}
 .mname{font-family:var(--display);font-weight:700;font-size:19px;color:var(--night);line-height:1.2}
 .mschool{color:var(--slate);font-size:14.5px;line-height:1.4}
-.mtags{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
-.mtag{background:var(--gold-soft);color:var(--deep);font-weight:700;font-size:12.5px;line-height:1.2;padding:4px 9px;border-radius:999px}
+.mtags{display:flex;flex-wrap:wrap;gap:2px 10px;margin-top:6px}
+.mtag{color:#2b5c9a;font-weight:600;font-size:13px;line-height:1.35;letter-spacing:.01em}
 .mnow{color:var(--slate);font-size:14px;line-height:1.4;margin-top:8px}
 .mnow b{color:var(--night);font-weight:700}
 .mview{margin-top:auto;padding-top:12px;font-weight:700;font-size:14.5px;color:var(--night)}
 @media (max-width:560px){
   .mentor-grid{grid-template-columns:repeat(2,1fr);gap:12px}
-  .mbody{padding:12px 12px 14px}.mname{font-size:16px}.mtag{font-size:11.5px;padding:3px 8px}.mnow{font-size:12.5px}
+  .mbody{padding:12px 12px 14px}.mname{font-size:16px}.mtag{font-size:12px}.mnow{font-size:12.5px}
   .initials{font-size:40px}
 }
 
@@ -176,8 +176,8 @@ dialog.profile::backdrop{background:rgba(7,21,41,.62)}
 .pbody{padding:32px 32px 30px}
 .pbody h2{font-size:30px;color:var(--night)}
 .pmeta{color:var(--slate);margin-top:6px}
-.ptopics{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
-.ptopics span{background:var(--paper);color:var(--night);font-weight:700;font-size:13px;padding:5px 10px;border-radius:999px}
+.ptopics{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:14px}
+.ptopics span{color:#2b5c9a;font-weight:600;font-size:15px}
 .pbody ul{margin:20px 0 24px;padding-left:20px}
 .pbody li{margin-bottom:6px}
 .pbody li::marker{color:var(--gold)}
