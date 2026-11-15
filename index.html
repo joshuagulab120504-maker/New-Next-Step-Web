@@ -24,14 +24,22 @@
 <div id="site-header"></div>
 
 <main id="main">
-  <section class="hero" aria-label="Next Step Guyana">
+  <section class="hero hero-boxed" aria-label="Next Step Guyana">
     <div class="wrap">
-      <div class="hero-copy">
-        <h1><span class="l1">Next Step</span><span class="l2">Guyana</span></h1>
-        <p class="tagline">Helping Guyanese students figure out their future.</p>
-        <div class="actions">
-          <a class="btn btn-gold" href="mentors.html">Meet the mentors</a>
-          <a class="btn btn-ghost" href="resources.html">View resources</a>
+      <div class="hero-card">
+        <picture class="hero-art">
+          <source media="(min-width:900px)" type="image/webp" srcset="assets/hero.webp">
+          <source media="(min-width:900px)" srcset="assets/hero.jpg">
+          <source type="image/webp" srcset="assets/hero-mobile.webp">
+          <img src="assets/hero-mobile.jpg" alt="Three students with backpacks looking up at a trail of stars over the city at dusk" fetchpriority="high">
+        </picture>
+        <div class="hero-copy">
+          <h1><span class="l1">Next Step</span><span class="l2">Guyana</span></h1>
+          <p class="tagline">Helping Guyanese students figure out their future.</p>
+          <div class="actions">
+            <a class="btn btn-gold" href="mentors.html">Meet the mentors</a>
+            <a class="btn btn-ghost" href="resources.html">View resources</a>
+          </div>
         </div>
       </div>
     </div>

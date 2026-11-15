@@ -406,3 +406,39 @@ details.q .a p + p{margin-top:12px}
 @media (max-width:640px){.outreach{grid-template-columns:1fr 1fr}.outreach a:first-child{grid-column:1/-1;aspect-ratio:16/10}}
 .outreach-note{color:var(--slate);margin-top:12px;font-size:15px}
 .session{scroll-margin-top:90px}
+
+/* ---------- Home hero: boxed artwork (phone-sized box, wide box on laptops) ---------- */
+.home .site-header{position:sticky;background-color:var(--night);background-image:none}
+.hero.hero-boxed{background:#fff;color:#fff;overflow:visible}
+.hero.hero-boxed::before{display:none}
+.hero.hero-boxed .wrap{min-height:0;display:block;padding-top:16px;padding-bottom:8px}
+.hero-card{position:relative;display:flex;flex-direction:column;height:calc(100vh - 72px - 28px);height:calc(100svh - 72px - 28px);min-height:520px;max-height:760px;border-radius:24px;overflow:hidden;background:#1d3a5f;box-shadow:0 14px 40px rgba(12,35,64,.22);isolation:isolate}
+.hero-art{display:block;order:2;flex:1 1 auto;min-height:0;margin-top:-56px}
+.hero-art img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 12%;
+  -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 22%);mask-image:linear-gradient(180deg,transparent 0,#000 22%)}
+.hero-boxed .hero-copy{order:1;flex:none;position:relative;z-index:1;text-align:center;padding:32px 22px 0;max-width:none}
+.hero-boxed h1 .l1{font-size:clamp(46px,13vw,64px)}
+.hero-boxed h1 .l2{font-size:clamp(32px,9vw,44px)}
+.hero-boxed .tagline{margin:14px auto 0;font-size:17.5px;max-width:20em}
+.hero-boxed .actions{justify-content:center;margin-top:20px;gap:10px}
+.hero-boxed .actions .btn{flex:1 1 100%;justify-content:center;max-width:340px;margin:0 auto;padding:14px 22px}
+@media (min-width:600px) and (max-width:899px){
+  .hero-card{height:auto;max-height:none}
+  .hero-art img{height:auto;aspect-ratio:800/768}
+  .hero-boxed .actions .btn{flex:0 1 auto;margin:0}
+  .hero-art{margin-top:-90px}
+}
+/* Laptops and up: the full painting in a wide box, text on the left */
+@media (min-width:900px){
+  .hero.hero-boxed .wrap{padding-top:28px;padding-bottom:8px}
+  .hero-card{display:block;height:clamp(500px,70vh,640px);min-height:0;max-height:none;border-radius:28px}
+  .hero-art{position:absolute;inset:0;margin:0}
+  .hero-art img{width:100%;height:100%;aspect-ratio:auto;object-fit:cover;object-position:72% 35%;-webkit-mask-image:none;mask-image:none}
+  .hero-card::after{content:"";position:absolute;inset:0;z-index:0;background:linear-gradient(90deg,rgba(7,21,41,.82) 0%,rgba(7,21,41,.5) 38%,rgba(7,21,41,0) 62%)}
+  .hero-boxed .hero-copy{position:relative;z-index:1;height:100%;display:flex;flex-direction:column;justify-content:center;text-align:left;padding:0 clamp(40px,5vw,72px);max-width:640px}
+  .hero-boxed h1 .l1{font-size:clamp(64px,7vw,96px)}
+  .hero-boxed h1 .l2{font-size:clamp(42px,4.6vw,62px)}
+  .hero-boxed .tagline{margin:20px 0 0;font-size:clamp(19px,1.7vw,23px)}
+  .hero-boxed .actions{justify-content:flex-start;margin-top:30px}
+  .hero-boxed .actions .btn{flex:0 0 auto;margin:0}
+}
