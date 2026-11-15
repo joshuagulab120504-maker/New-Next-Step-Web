@@ -81,12 +81,6 @@ window.LINKS = [
     description: "Free lessons and practice for maths, sciences and SAT prep."
   },
   {
-    title: "EducationUSA advising centre, US Embassy Guyana",
-    url: "https://educationusa.state.gov/centers/educationusa-advising-center-us-embassy-guyana",
-    category: "Universities & Applications",
-    description: "Free official advising in Georgetown for students applying to US universities."
-  },
-  {
     title: "Common App",
     url: "https://www.commonapp.org",
     category: "Universities & Applications",
