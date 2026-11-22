@@ -198,6 +198,8 @@ window.NS = {
     if (past && s.recording) act += '<a class="btn btn-line" href="' + NS.esc(s.recording) + '" target="_blank" rel="noopener">Watch recording</a>';
     else if (!past && !s.handout && s.joinLink) act = '<a class="btn btn-gold" href="' + NS.esc(s.joinLink) + '" target="_blank" rel="noopener">' + NS.esc(s.button || "Join event") + "</a>";
     else if (!past && !s.handout) act = '<a class="btn btn-line" href="' + window.SITE.whatsapp + '" target="_blank" rel="noopener">Get the link on WhatsApp</a>';
+    /* Optional second link, e.g. a community group (shows before and after the event) */
+    if (s.link2) act += '<a class="btn btn-line" href="' + NS.esc(s.link2) + '" target="_blank" rel="noopener">' + NS.esc(s.button2 || "Learn more") + "</a>";
     var gal = "";
     if (s.photos && s.photos.length) {
       var gi = NS._galleries.push(s.photos) - 1, SHOWN = 6;

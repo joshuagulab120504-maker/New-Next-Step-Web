@@ -19,6 +19,8 @@
    handout   Optional page or file to share (e.g. "brochure.html"). Shows a
              button before AND after the event, and replaces the join button.
    handoutButton  Text for that button (default "View handout")
+   link2     Optional second link, e.g. a WhatsApp community group
+   button2   Text for that button (default "Learn more")
    id        Optional short name so other pages can link to the event,
              e.g. "college-fair-2026" -> events.html#college-fair-2026
    photos    Optional gallery shown on the event card. Each photo is
@@ -37,8 +39,10 @@ window.SESSIONS = [
     where: "Zoom · Free",
     mentors: ["Joshua Gulab (moderator)", "Amrita Naraine (Artellica AI)", "Eldon Marks (V75 Inc.)"],
     about: "With American Spaces: AI coding tools and how to start building with AI.",
-    joinLink: "",
+    joinLink: "https://docs.google.com/forms/d/1xMbsiRO-RrWtbBj1Qua4PPNuRKhq7yFAJ1b2jyGB7dk/viewform",
     button: "Register",
+    link2: "https://chat.whatsapp.com/Cu02m2fDsNOK7k3iFpnUOH",
+    button2: "Join the Tech Talk community",
     recording: "",
     id: "tech-talk-4"
   },
