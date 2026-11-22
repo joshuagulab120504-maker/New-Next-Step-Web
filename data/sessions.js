@@ -30,6 +30,20 @@
 window.SESSIONS = [
 
   {
+    title: "Tech Talk #4: What can you build with AI?",
+    theme: "AI & Tech",
+    date: "2026-11-24",
+    time: "6:00 PM to 7:30 PM",
+    where: "Zoom · Free",
+    mentors: ["Joshua Gulab (moderator)", "Amrita Naraine (Artellica AI)", "Eldon Marks (V75 Inc.)"],
+    about: "With American Spaces: AI coding tools and how to start building with AI.",
+    joinLink: "",
+    button: "Register",
+    recording: "",
+    id: "tech-talk-4"
+  },
+
+  {
     title: "EducationUSA Guyana College Fair",
     theme: "University fair",
     date: "2026-10-30",
