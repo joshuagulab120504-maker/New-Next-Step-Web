@@ -182,9 +182,22 @@ window.NS = {
     var all = (window.SESSIONS || []).slice();
     var today = new Date(); today.setHours(0, 0, 0, 0);
     var d = function (s) { var p = s.date.split("-"); return new Date(+p[0], +p[1] - 1, +p[2]); };
+    /* An event is past once its day is over, or on the day once its finish time
+       (the last time in "time", e.g. "6:00 PM to 7:30 PM") has passed, or if marked done: true */
+    var isPast = function (s) {
+      if (s.done) return true;
+      var day = d(s);
+      if (day < today) return true;
+      if (day > today) return false;
+      var t = String(s.time || "").match(/(\d{1,2})(?::(\d{2}))?\s*([AP])\.?M\.?[^0-9]*$/i);
+      if (!t) return false;
+      var h = +t[1] % 12 + (/p/i.test(t[3]) ? 12 : 0), end = new Date(day);
+      end.setHours(h, +(t[2] || 0), 0, 0);
+      return new Date() > end;
+    };
     return {
-      upcoming: all.filter(function (s) { return d(s) >= today; }).sort(function (a, b) { return d(a) - d(b); }),
-      past: all.filter(function (s) { return d(s) < today; }).sort(function (a, b) { return d(b) - d(a); }),
+      upcoming: all.filter(function (s) { return !isPast(s); }).sort(function (a, b) { return d(a) - d(b); }),
+      past: all.filter(isPast).sort(function (a, b) { return d(b) - d(a); }),
       date: d
     };
   },

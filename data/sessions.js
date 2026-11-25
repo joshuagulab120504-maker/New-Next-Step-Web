@@ -16,6 +16,8 @@
    joinLink  Link students click to join or register (leave "" until you have it)
    button    Optional button text, e.g. "Register" (default "Join event")
    recording Link to the recording afterwards, e.g. a YouTube link
+   done      Optional: true moves an event to Past right away. Otherwise it
+             moves by itself once the finish time in "time" has passed.
    handout   Optional page or file to share (e.g. "brochure.html"). Shows a
              button before AND after the event, and replaces the join button.
    handoutButton  Text for that button (default "View handout")
@@ -44,6 +46,7 @@ window.SESSIONS = [
     link2: "https://chat.whatsapp.com/Cu02m2fDsNOK7k3iFpnUOH",
     button2: "Join the Tech Talk community",
     recording: "",
+    done: true,
     id: "tech-talk-4"
   },
 
